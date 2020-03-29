@@ -1,3 +1,5 @@
+from viewdom_wired.render import render, component, register_component
+
 __version__ = '0.1.0'
 
 
@@ -6,5 +8,7 @@ def hello():
 
 
 __all__ = [
-    'hello'
+    'component',
+    'register_component',
+    'render',
 ]
