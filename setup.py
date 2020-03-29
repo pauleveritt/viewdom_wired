@@ -26,7 +26,7 @@ tests_require = [
 setup(
     name='viewdom_wired',
     description=(
-        'Container and DI for viewdom'
+        'Injectable and plugabble components and services for viewdom'
     ),
     version='0.1.0',
     long_description=readme + '\n\n' + changes,
