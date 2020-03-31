@@ -2,7 +2,10 @@ from dataclasses import dataclass
 
 from viewdom import html
 
+from viewdom_wired import component
 
+
+@component()
 @dataclass
 class Greeting:
     name: str = 'viewdom_wired'

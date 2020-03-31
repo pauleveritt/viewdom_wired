@@ -16,4 +16,4 @@ from viewdom_wired import render
 def main() -> str:
     registry = make_app(Greeting)
     container = registry.create_container()
-    return render(html('''<{Greeting}/>'''), container)
+    return render(html('<{Greeting}/>'), container)

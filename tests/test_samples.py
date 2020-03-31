@@ -9,5 +9,10 @@ def test_samples_hello_app():
 
 
 def test_samples_app_plugin_site():
-    from samples.app_plugin_site import main
+    from samples.app_plugin_site.site import main
+    assert main() == '<h1>Hello viewdom_wired</h1>'
+
+
+def test_samples_app_decorators_render():
+    from samples.app_decorators_render.site import main
     assert main() == '<h1>Hello viewdom_wired</h1>'

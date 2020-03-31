@@ -28,4 +28,14 @@ Put the app part in its own file and the component in its own file.
 Re-organize the directory to mimic a site which installs an app package and a plugin.
 Registry gets passed to the plugins.
 
-- Richer app class with a scanner, switch to decorators for components
+
+``app_decorators_render``
+=========================
+
+Richer app class with a scanner and a render method.
+Switch to supporting decorators for components.
+
+- Rendering with a context
+- Multiple plugins
+- Multiple plugins with the same component
+- Override plugin with site-specific component

@@ -26,11 +26,11 @@ class Greeting:
     name: str = 'viewdom_wired'
 
     def __call__(self):
-        return html('''<h1>Hello {self.name}</h1>''')
+        return html('<h1>Hello {self.name}</h1>')
 
 
 def main() -> str:
     registry = ServiceRegistry()
     register_component(registry, Greeting)
     container = registry.create_container()
-    return render(html('''<{Greeting}/>'''), container)
+    return render(html('<{Greeting}/>'), container)
