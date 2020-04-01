@@ -35,11 +35,23 @@ Registry gets passed to the plugins.
 Richer app class with a scanner and a render method.
 Switch to supporting decorators for components.
 
+``override``
+============
+
+The site replaces ``Greeting`` with its own implementation.
+
 ``context``
 ===========
 
 The app can render using a container that has a context value.
 The plugin can then provide a component for the default and a different implementation for a certain context.
+
+
+``custom_context``
+==================
+
+The site adds a ``Greeter`` component to be used only for a certain ``Customer`` context.
+
 
 - Rendering with a context
 - Multiple plugins

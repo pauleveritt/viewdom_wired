@@ -18,6 +18,11 @@ def test_samples_app_decorators_render():
     assert main() == '<h1>Hello viewdom_wired</h1>'
 
 
+def test_samples_override():
+    from samples.override.site import main
+    assert main() == '<h1>Hello My Site</h1>'
+
+
 def test_samples_context():
     from samples.context.site import main
     assert main() == '<h1>Hello Mary</h1>'
