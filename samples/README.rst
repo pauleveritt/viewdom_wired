@@ -35,6 +35,12 @@ Registry gets passed to the plugins.
 Richer app class with a scanner and a render method.
 Switch to supporting decorators for components.
 
+``context``
+===========
+
+The app can render using a container that has a context value.
+The plugin can then provide a component for the default and a different implementation for a certain context.
+
 - Rendering with a context
 - Multiple plugins
 - Multiple plugins with the same component

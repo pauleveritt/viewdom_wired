@@ -16,3 +16,17 @@ def test_samples_app_plugin_site():
 def test_samples_app_decorators_render():
     from samples.app_decorators_render.site import main
     assert main() == '<h1>Hello viewdom_wired</h1>'
+
+
+def test_samples_context():
+    from samples.context.site import main
+    assert main() == '<h1>Hello Mary</h1>'
+
+
+def test_samples_site_context():
+    from samples.custom_context.site import main
+    results = main()
+    regular_result = results['regular_result']
+    assert regular_result == '<h1>Hello Mary</h1>'
+    french_result = results['french_result']
+    assert french_result == '<h1>Bonjour Marie</h1>'
