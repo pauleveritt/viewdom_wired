@@ -21,6 +21,7 @@ docs_require = [
 
 tests_require = [
     'pytest',
+    'mypy',
 ]
 
 setup(
