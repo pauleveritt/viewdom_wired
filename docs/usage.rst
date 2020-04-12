@@ -105,7 +105,7 @@ They can ask the injector to get information for them, for example, from the ``w
 
 The app changes, as ``render`` now accepts a context, which it puts in the container:
 
-.. literalinclude:: ../samples/override/context/app/__init__.py
+.. literalinclude:: ../samples/context/app/__init__.py
 
 Here's a **big** point: the component asks the *injector* to get the *context*.
 Thus, the parent components don't have to pass this all the way down.
@@ -115,15 +115,15 @@ Moreover, the injector is asked to get a specific attribute off the context, whi
 
 - The component has a smaller surface area with the outside world, instead of getting the entire context
 
-.. literalinclude:: ../samples/override/context/plugins/greeting/greeting.py
+.. literalinclude:: ../samples/context/plugins/greeting/greeting.py
 
 The site defines different kinds of contexts:
 
-.. literalinclude:: ../samples/override/context/site/contexts.py
+.. literalinclude:: ../samples/context/site/contexts.py
 
 The site then makes a context to use during rendering:
 
-.. literalinclude:: ../samples/override/context/site/__init__.py
+.. literalinclude:: ../samples/context/site/__init__.py
 
 Of course in a bigger system, the pluggable app might handle creating the context, e.g. by looking at the incoming URL.
 
@@ -136,11 +136,11 @@ The plugin can then provide a component for the default and a different implemen
 
 We now have two kinds of context:
 
-.. literalinclude:: ../samples/override/custom_context/site/contexts.py
+.. literalinclude:: ../samples/custom_context/site/contexts.py
 
 The site then makes a local flavor of the ``Greeter`` component, for use with the new kind of context:
 
-.. literalinclude:: ../samples/override/custom_context/site/components.py
+.. literalinclude:: ../samples/custom_context/site/components.py
 
 The template in the view doesn't have to change.
 Any other components that use a ``Greeting`` component, don't have to change.

@@ -62,6 +62,13 @@ But when it says it is ``for_=Logo``, it's "for" a protocol, not a particular im
 This all works well, because ``wired`` just treats ``Logo`` as a marker, whether a class or a "protocol".
 
 However, we still don't have a way to say ``NoAltLogo`` is a ``Logo``, much less enforce it with ``mypy``.
+In fact, the type checker now gets mad on this line:
+
+.. code-block:: python
+
+    logo: Logo = NoAltLogo(src='alt.png')
+
+...because ``NoAltLogo`` is not a type of ``Logo``.
 
 adherent
 ========
@@ -69,24 +76,33 @@ adherent
 In the ``mypy`` tracker, Glyph `pointed to a decorator <https://github.com/python/mypy/issues/4717#issuecomment-454609539>`_ which could say "the following class implements a certain protocol."
 Let's use it.
 
+.. literalinclude:: ../samples/protocols/adherent/app/decorators.py
 
+The built-in ``DefaultLogo`` needs to say it adheres to the ``Logo`` protocol:
 
-If you later make an instance of that class, but with a type hint saying the protocol name,
+.. literalinclude:: ../samples/protocols/adherent/plugins/logo/components.py
 
+The plugin's component needs to adhere as well:
 
-plugin_navbar
-- a plugin wants to provide a replacement
-    - Gets src from config, so it doesn't have to be passed down
-    - Provides alt support
-- the replacement doesn't quite follow the convention
-- a test constructs an instance with a vdom which passes
-- why didn't this get caught by mypy?
+.. literalinclude:: ../samples/protocols/adherent/plugins/logo/components.py
 
-logo_protocol
-- have Logo as a protocol with a built-in logo that adheres
-- test passes, mypy passes
-- but the replacement fails, it doesn't adhere to the protocol
+Unlike ``zope.interface``, ``mypy`` won't immediately validate conformance.
+You have to use the component somewhere.
+Since Python doesn't really know about tagged templates, it doesn't treat it like an f-string (a problem to be solved later.)
+But any instance creation in a test, as we've done when testing VDOMs, would get an error from ``mypy`` if it was pointed at the tests.
+
+Unfortunately the error message from ``mypy`` is not as rich as that of ``zope.interface`` verification.
+It doesn't tell you how the adherent failed, just that it failed.
 
 Futures
-- IDEs could red-squiggly when the contract was violated
-- mypy and IDEs could understand the template string and validate/autocomplete based on protocol
+=======
+
+It's an interesting direction to consider. What could be improved with the use of protocols?
+
+- Conflate the ``adherent`` and ``component`` decorator to avoid double-typing
+
+- Either have Python adopt tagged templates or teach type checkers to treat ``html('{self.src}')`` as an f-string
+
+- Go further and teach type checkers and IDEs to autocomplete and r ed-squiggly on adherents
+
+- Also teach them to navigate to protocols, then from there to implementations (similar to superclasses and usages)
