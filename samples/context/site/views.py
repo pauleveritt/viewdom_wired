@@ -1,15 +1,12 @@
 """
-
 Views for the site.
 
 Would likely be Flask views or Sphinx context handlers.
-
 """
 
 from viewdom import html
 
-# noinspection PyUnresolvedReferences
-from ..plugins.greeting import Greeting
+from ..plugins.greeting import Greeting  # noqa
 
 
 def greeting_view():

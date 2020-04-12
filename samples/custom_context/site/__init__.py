@@ -1,26 +1,29 @@
 """
-
 A package for a site that uses an installed app and some plugins.
-
 """
 from typing import Dict
 
+from . import components
 from .contexts import Customer, FrenchCustomer
 from .views import greeting_view
 from ..app import App
 from ..plugins import greeting
-from . import components
+
+
+def site_startup() -> App:
+    # Make an app instance when the site starts up
+    app = App()
+    app.setup(greeting)
+
+    # Replace plugin.greeting.Greeting with a different
+    # implementation for this site
+    app.scanner.scan(components)
+
+    return app
 
 
 def main() -> Dict[str, str]:
-    app = App()
-
-    # First setup each plugin
-    app.setup(greeting)
-
-    # Last, replace plugin.greeting.Greeting with a
-    # different implementation for this site
-    app.scanner.scan(components)
+    app = site_startup()
 
     # Regular customer
     regular_customer = Customer(name='Mary')

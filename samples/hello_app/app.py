@@ -1,10 +1,8 @@
 """
-
 Sample application
 
 This what a pluggable framework or application will provide,
 to be used by plugins and by sites.
-
 """
 
 from wired import ServiceRegistry

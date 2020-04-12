@@ -1,0 +1,6 @@
+div.sphinxsidebarwrapper h1.logo a {
+    font-size: smaller;
+}
+div.sphinxsidebar {
+    width: 270px;
+}

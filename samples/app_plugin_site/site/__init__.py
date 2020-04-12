@@ -1,15 +1,12 @@
 """
-
 A package for a site that uses an installed app and some plugins.
-
 """
 from viewdom import html
 
 from viewdom_wired import render
 from ..app import make_app
 from ..plugins import greeting
-# noinspection PyUnresolvedReferences
-from ..plugins.greeting import Greeting
+from ..plugins.greeting import Greeting  # noqa
 
 
 def main() -> str:

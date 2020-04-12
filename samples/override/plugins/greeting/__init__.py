@@ -1,7 +1,5 @@
 """
-
 A plugin that can be installed with pip and then register its components.
-
 """
 
 from . import greeting

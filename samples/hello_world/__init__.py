@@ -1,11 +1,10 @@
 """
-
 A simple example using (a) a pluggable app and (b) some known
 components.
 
 All 3 roles are in one file: pluggable app, plugins, a site using both.
 
-All 3 parts are done on every invokation:
+All 3 parts are done on every invocation:
 
 - Make a registry
 - Register the components
@@ -29,8 +28,15 @@ class Greeting:
         return html('<h1>Hello {self.name}</h1>')
 
 
-def main() -> str:
+def site_startup() -> ServiceRegistry:
+    # Make a instance when the site starts up
     registry = ServiceRegistry()
     register_component(registry, Greeting)
+    return registry
+
+
+def main() -> str:
+    registry = site_startup()
+    # Process a request and return a response
     container = registry.create_container()
     return render(html('<{Greeting}/>'), container)

@@ -52,8 +52,3 @@ The plugin can then provide a component for the default and a different implemen
 
 The site adds a ``Greeter`` component to be used only for a certain ``Customer`` context.
 
-
-- Rendering with a context
-- Multiple plugins
-- Multiple plugins with the same component
-- Override plugin with site-specific component
