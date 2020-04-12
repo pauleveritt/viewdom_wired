@@ -11,7 +11,7 @@ changes = readfile('CHANGES.rst')
 
 requires = [
     # 'viewdom',
-    'viewdom @ git+ssh://git@github.com/pauleveritt/viewdom#egg=viewdom',
+    'viewdom @ git+https://github.com/pauleveritt/viewdom#egg=viewdom',
     'wired',
     'venusian',
 ]
