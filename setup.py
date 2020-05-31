@@ -10,8 +10,7 @@ readme = readfile('README.rst')
 changes = readfile('CHANGES.rst')
 
 requires = [
-    # 'viewdom',
-    'viewdom @ git+https://github.com/pauleveritt/viewdom#egg=viewdom',
+    'viewdom',
     'wired',
     'venusian',
 ]

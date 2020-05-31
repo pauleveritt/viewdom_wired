@@ -1,0 +1,13 @@
+from typing import Iterable
+
+from typing_extensions import Protocol
+from viewdom import VDOM
+
+
+class Component(Protocol):
+
+    def __call__(self) -> VDOM:
+        ...
+
+
+Children = Iterable[Component]
