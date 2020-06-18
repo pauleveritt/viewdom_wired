@@ -1,4 +1,4 @@
-from viewdom.h import H
+from viewdom import VDOM
 
 
 def test_hello_logo_altlogo():
@@ -6,7 +6,7 @@ def test_hello_logo_altlogo():
     from samples.protocols.hello_logo.plugins.logo import NoAltLogo
     logo: Logo = NoAltLogo(src='alt.png')
     vdom = logo()
-    assert vdom == H(tag='img', props={'src': 'alt.png'}, children=[])
+    assert vdom == VDOM(tag='img', props={'src': 'alt.png'}, children=[])
 
 
 def test_hello_logo_render():

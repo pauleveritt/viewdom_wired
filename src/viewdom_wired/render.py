@@ -2,7 +2,8 @@ from dataclasses import fields, Field, MISSING
 from typing import get_type_hints, Callable, Optional, Any, Type
 
 from venusian import Scanner, attach
-from viewdom.h import Context, flatten, H, escape, encode_prop
+from viewdom import Context, VDOM
+from viewdom.h import flatten, escape, encode_prop
 from wired import ServiceContainer, ServiceRegistry
 from wired.dataclasses import Context as WiredContext
 
@@ -151,8 +152,8 @@ def render(value, container: ServiceContainer, **kwargs):
 
 def render_gen(value, container: ServiceContainer):
     for item in flatten(value):
-        if isinstance(item, H):
-            tag, props, children = item
+        if isinstance(item, VDOM):
+            tag, props, children = item.tag, item.props, item.children
             if callable(tag):
                 yield from render_gen(relaxed_call(container, tag, children=children, **props), container)
                 continue

@@ -1,4 +1,4 @@
-from viewdom.h import H
+from viewdom import VDOM
 
 
 def test_adherent_altlogo():
@@ -6,7 +6,7 @@ def test_adherent_altlogo():
     from samples.protocols.adherent.plugins.logo import NoAltLogo
     logo: Logo = NoAltLogo(src='alt.png')
     vdom = logo()
-    assert vdom == H(tag='img', props={'src': 'alt.png'}, children=[])
+    assert vdom == VDOM(tag='img', props={'src': 'alt.png'}, children=[])
 
 
 def test_adherent_render():
