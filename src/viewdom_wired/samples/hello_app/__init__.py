@@ -5,8 +5,8 @@ components, both in their own files.
 
 from viewdom import html
 
-from samples.hello_app.app import make_app
-from samples.hello_app.components import Greeting
+from viewdom_wired.samples.hello_app.app import make_app
+from viewdom_wired.samples.hello_app.components import Greeting
 from viewdom_wired import render
 
 

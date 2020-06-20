@@ -8,6 +8,3 @@ class Component(Protocol):
 
     def __call__(self) -> VDOM:
         ...
-
-
-Children = Iterable[Component]

@@ -12,4 +12,4 @@ class NoAltLogo:
     src: str
 
     def __call__(self):
-        return html('<img src={self.src} />')
+        return html('<img alt="No alt Needed" src={self.src} />')

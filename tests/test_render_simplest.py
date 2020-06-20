@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 from wired import ServiceRegistry
 
-from viewdom.h import html
-from viewdom_wired import render, component, register_component
+from viewdom.h import html, VDOM
+from viewdom_wired import component, register_component
 
 
 @component()
@@ -11,7 +11,7 @@ from viewdom_wired import render, component, register_component
 class Heading:
     name: str = 'Hello'
 
-    def __call__(self):
+    def __call__(self) -> VDOM:
         return html('''<h1>{self.name}</h1>''')
 
 
@@ -24,6 +24,7 @@ def test_wired_renderer_simplest_nocontainer(registry: ServiceRegistry):
 
 
 def test_wired_renderer_simplest_container(registry: ServiceRegistry):
+    from viewdom_wired import render
     container = registry.create_container()
     register_component(registry, Heading)
     expected = '<h1>Hello</h1>'
@@ -32,6 +33,7 @@ def test_wired_renderer_simplest_container(registry: ServiceRegistry):
 
 
 def test_wired_renderer_simplest_propoverride(registry: ServiceRegistry):
+    from viewdom_wired import render
     container = registry.create_container()
     register_component(registry, Heading)
     expected = '<h1>Override</h1>'

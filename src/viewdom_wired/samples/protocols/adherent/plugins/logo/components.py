@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from viewdom import html
 
 from viewdom_wired import component
-from samples.protocols.adherent.app.components import Logo
-from samples.protocols.adherent.app.decorators import adherent
+from ...app import Logo
+from ...app.decorators import adherent
 
 
 @component(for_=Logo)
@@ -14,4 +14,4 @@ class NoAltLogo:
     src: str
 
     def __call__(self):
-        return html('<img src={self.src} />')
+        return html('<img src={self.src} title="No Alt Logo" />')

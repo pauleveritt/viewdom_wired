@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from viewdom import html
 from wired.dataclasses import injected
 
-from samples.subcomponents.app import PunctuationCharacter
+from viewdom_wired.samples.subcomponents.app import PunctuationCharacter
 from viewdom_wired import component
 
 

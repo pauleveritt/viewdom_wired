@@ -22,6 +22,8 @@ docs_require = [
 tests_require = [
     'pytest',
     'mypy',
+    'pytest-mypy',
+    'ipython',
 ]
 
 setup(
@@ -35,8 +37,9 @@ setup(
     author='Paul Everitt',
     author_email='pauleveritt@me.com',
     url='https://viewdom_wired.readthedocs.io',
-    packages=find_packages('src', exclude=['tests']),
+    packages=find_packages('src'),
     package_dir={'': 'src'},
+    package_data={"viewdom_wired": ["py.typed"]},
     include_package_data=True,
     python_requires='>=3.6',
     install_requires=requires,

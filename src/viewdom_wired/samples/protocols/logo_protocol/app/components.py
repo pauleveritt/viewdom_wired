@@ -1,19 +1,12 @@
 from dataclasses import dataclass
-from typing import Protocol
 
 from viewdom import html
 
 from viewdom_wired import component
+from .protocols import Logo, Navbar
 
 
-class Logo(Protocol):
-    src: str
-    alt: str
-
-    def __call__(self) -> str: ...
-
-
-@component()
+@component(for_=Logo)
 @dataclass
 class DefaultLogo:
     src: str
@@ -23,10 +16,11 @@ class DefaultLogo:
         return html('<img src={self.src} />')
 
 
-@component()
+@component(for_=Navbar)
 @dataclass
-class Navbar:
+class DefaultNavbar:
+    logo_alt: str
     logo_src: str
 
     def __call__(self):
-        return html('<nav><{Logo} src={self.logo_src} /></nav>')
+        return html('<nav><{Logo} alt={self.logo_alt} src={self.logo_src} /></nav>')

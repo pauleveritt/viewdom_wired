@@ -1,6 +1,6 @@
-from . import components  # noqa
-from ...app import App
+from . import components
 from .components import NoAltLogo
+from ...app import App
 
 
 def setup(app: App):
