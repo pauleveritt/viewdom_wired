@@ -1,8 +1,8 @@
 """
-Sample application
+Pluggable application
 
-This what a pluggable framework or application will provide,
-to be used by plugins and by sites.
+This what a pluggable application will provide, to be used by plugins
+and by sites. At the moment it is just the registry.
 """
 
 from wired import ServiceRegistry

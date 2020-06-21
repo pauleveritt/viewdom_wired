@@ -25,13 +25,13 @@ First, a pluggable app:
 
 .. literalinclude:: ../samples/hello_app/app.py
 
-Then, an extension for the app, providing a component that can be used in a site:
+Then, a third-party plugin for the app, providing a component that can be used in a site:
 
 .. literalinclude:: ../samples/hello_app/components.py
 
-Finally, the site itself, which uses the app and the plugin to render a response:
+Finally, the site itself, which uses the app and the third-party plugin to render a response:
 
-.. literalinclude:: ../samples/hello_app/__init__.py
+.. literalinclude:: ../samples/hello_app/site.py
 
 app_plugin_site
 ===============

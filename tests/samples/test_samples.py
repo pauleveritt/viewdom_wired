@@ -1,10 +1,10 @@
 def test_samples_hello_world():
-    from viewdom_wired.samples.hello_world import main
+    from viewdom_wired.samples.hello_world.app import main
     assert main() == '<h1>Hello viewdom_wired</h1>'
 
 
 def test_samples_hello_app():
-    from viewdom_wired.samples.hello_app import main
+    from viewdom_wired.samples.hello_app.site import main
     assert main() == '<h1>Hello viewdom_wired</h1>'
 
 
