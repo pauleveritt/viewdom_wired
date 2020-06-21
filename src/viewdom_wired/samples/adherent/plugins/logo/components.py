@@ -14,4 +14,4 @@ class NoAltLogo:
     src: str
 
     def __call__(self) -> VDOM:
-        return html('<img src={self.src} title="No Alt Logo" />')
+        return html('<img src={self.src} title="No alt Needed" />')

@@ -45,3 +45,13 @@ def test_samples_custom_context():
 def test_samples_protocols_hello_logo():
     from viewdom_wired.samples.protocols_hello_logo.site import main
     assert main() == '<nav><img src="logo.png"/></nav>'
+
+
+def test_samples_logo_protocol():
+    from viewdom_wired.samples.logo_protocol.site import main
+    assert main() == '<nav><img alt="No alt Needed" src="logo.png"/></nav>'
+
+
+def test_samples_adherent():
+    from viewdom_wired.samples.adherent.site import main
+    assert main() == '<nav><img src="logo.png" title="No alt Needed"/></nav>'

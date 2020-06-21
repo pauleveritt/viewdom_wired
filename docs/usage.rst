@@ -198,3 +198,79 @@ When the site's view renders, it gets a navbar containing an image, but with no 
 
   <nav><img src="logo.png"/></nav>
 
+logo_protocol
+=============
+
+This example has a fundamental change.
+The pluggable app still has ``Navbar`` and ``Logo``, but they are *protocols*.
+They aren't actual components, just the abstract definition of the contract:
+
+.. literalinclude:: ../samples/logo_protocol/app/protocols.py
+
+That looks pretty cool: anybody that wants to make a different kind of "Logo" will now know exactly what's required.
+From a component perspective, the fields roughly conform to the "props" that need to be passed in when a template uses a component.
+It's also a way for static typing tools (IDEs, ``mypy``) to help tell you when contracts are broken.
+
+Each protocol subclasses from two bases.
+``Component`` is a protocol with exactly one contract: a component must have a ``__call__`` that returns a ``VDOM``.
+``Protocol`` is the flag that says this class-looking-thingy is a PEP 544 protocol.
+
+The pluggable app then ships with component implementations of each protocol:
+
+.. literalinclude:: ../samples/logo_protocol/app/components.py
+
+Like we saw earlier, the ``@component`` decorator says it is ``for_=Logo``.
+But this time, ``Logo`` isn't a component implementation.
+Instead, we are saying the following is an implementation of the abstract idea of a ``Logo``.
+
+The plugin then overrides just the logo:
+
+.. literalinclude:: ../samples/logo_protocol/plugins/logo/components.py
+
+Finally, in the site's view, we use ``Navbar`` in a template:
+
+.. literalinclude:: ../samples/logo_protocol/site/views.py
+
+But the ``Navbar`` that we import is the *protocol* not a particular implementation.
+
+In this site, the only ``Navbar`` implementation is in the pluggable app's ``DefaultNavbar``, shown above.
+It has a template asking for a ``Logo``, which is the *protocol* for a logo.
+Since the site loaded the plugin, and the plugin overrode the ``DefaultLogo`` with ``NoAltLogo``, the latter is used.
+
+Alas, we don't yet get ``mypy`` to tell us if we break the contract.
+We'll add that next.
+
+adherent
+========
+
+The ``component`` decorator tells our registry that we have a ``Navbar``.
+But that's a runtime idea, outside of Python and ``mypy`` and static type checking.
+We need a way to tell the type checker that we have some that adheres to a particular protocol, and thus yell at me if I break the contract.
+
+Here is an ``@adherent`` decorator which does so:
+
+.. literalinclude:: ../samples/adherent/app/decorator.py
+
+The pluggable app's default implementations now additionally say that they "adhere" to this protocol:
+
+.. literalinclude:: ../samples/adherent/app/components.py
+
+For now it is an extra decorator, used for systems that embrace PEP 544 protocols.
+
+This implementation runs correctly: ``DefaultNavbar`` passes in ``alt`` but the ``NoAltLogo`` component doesn't actually ask for it.
+However, static typing -- ``mypy`` -- knows you broke the contract:
+
+.. code-block:: bash
+
+  plugins/logo/components.py:11: error: Argument 1 has incompatible type "Type[NoAltLogo]"; expected "Type[Logo]"
+  Found 1 error in 1 file (checked 1 source file)
+
+.. note::
+
+  If this works out, I'll convert ``viewdom_wired`` to be protocol-based, eliminate the extra decorator, and fold this functionality into ``@component``.
+
+.. note::
+
+  PEP 544 claims that you can use "subclassing" to assert a class adheres to a protocol.
+  However ``mypy`` doesn't support it (and in fact, gets kind of mad about it.)
+  It's a reported issue.
