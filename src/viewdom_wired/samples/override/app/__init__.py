@@ -5,6 +5,7 @@ The features in this app would be grafted into
 """
 
 from dataclasses import dataclass, field
+from types import ModuleType
 
 from venusian import Scanner
 from wired import ServiceRegistry
@@ -20,7 +21,7 @@ class App:
     def __post_init__(self):
         self.scanner = Scanner(registry=self.registry)
 
-    def setup(self, module):
+    def setup(self, module: ModuleType):
         """ Call a plugin's setup function """
 
         s = getattr(module, 'setup')

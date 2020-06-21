@@ -15,6 +15,8 @@ def site_startup() -> App:
 
 
 def main() -> str:
+    """ Make an app and process a request """
+
     app = site_startup()
     vdom = greeting_view()
     return app.render(vdom)

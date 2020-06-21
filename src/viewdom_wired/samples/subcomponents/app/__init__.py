@@ -2,12 +2,11 @@
 A pluggable app that can be installed and can register plugins.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from venusian import Scanner
-from wired import ServiceRegistry
 
-from viewdom_wired import render
+from ...app_decorators_render.app import App as BaseApp
 
 
 @dataclass
@@ -18,9 +17,7 @@ class PunctuationCharacter:
 
 
 @dataclass
-class App:
-    registry: ServiceRegistry = field(default_factory=ServiceRegistry)
-    scanner: Scanner = field(init=False)
+class App(BaseApp):
 
     def __post_init__(self):
         self.scanner = Scanner(registry=self.registry)
@@ -30,15 +27,3 @@ class App:
             PunctuationCharacter(),
             PunctuationCharacter
         )
-
-    def setup(self, module):
-        """ Call a plugin's setup function """
-
-        s = getattr(module, 'setup')
-        s(self)
-
-    def render(self, vdom) -> str:
-        """ Render a template in a container """
-
-        container = self.registry.create_container()
-        return render(vdom, container)

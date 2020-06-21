@@ -1,6 +1,10 @@
+"""
+A plugin that can be installed with pip and then register its components.
+"""
+
 from dataclasses import dataclass
 
-from viewdom import html
+from viewdom import html, VDOM
 
 from viewdom_wired import component
 
@@ -10,5 +14,5 @@ from viewdom_wired import component
 class Greeting:
     name: str = 'viewdom_wired'
 
-    def __call__(self):
+    def __call__(self) -> VDOM:
         return html('<h1>Hello {self.name}</h1>')

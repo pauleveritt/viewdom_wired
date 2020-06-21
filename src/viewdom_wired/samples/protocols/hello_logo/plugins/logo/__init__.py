@@ -3,11 +3,11 @@ from ...app import App
 from .components import NoAltLogo
 
 
-def setup(app: App):
+def wired_setup(app: App):
     app.scanner.scan(components)
 
 
 __all__ = [
     'NoAltLogo',
-    'setup',
+    'wired_setup',
 ]

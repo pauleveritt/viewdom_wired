@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from types import ModuleType
 from typing import Optional, Type
 
 from venusian import Scanner
@@ -19,10 +20,10 @@ class App:
         # Register the built-in components
         self.scanner.scan(components)
 
-    def setup(self, module):
+    def setup(self, module: ModuleType):
         """ Call a plugin's setup function """
 
-        s = getattr(module, 'setup')
+        s = getattr(module, 'wired_setup')
         s(self)
 
     def render(self, vdom, context=Optional[Type]) -> str:

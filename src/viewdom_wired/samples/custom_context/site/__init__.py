@@ -6,7 +6,7 @@ from typing import Dict
 from . import components
 from .contexts import Customer, FrenchCustomer
 from .views import greeting_view
-from ..app import App
+from ...context.app import App
 from ..plugins import greeting
 
 

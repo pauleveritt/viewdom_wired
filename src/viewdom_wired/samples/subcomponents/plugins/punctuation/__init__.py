@@ -7,11 +7,11 @@ from .punctuation import Punctuation
 from ...app import App
 
 
-def setup(app: App):
+def wired_setup(app: App):
     app.scanner.scan(punctuation)
 
 
 __all__ = [
     'Punctuation',
-    'setup'
+    'wired_setup'
 ]

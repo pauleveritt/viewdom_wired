@@ -42,25 +42,34 @@ The app, which stores the registry:
 
 .. literalinclude:: ../samples/app_plugin_site/site/__init__.py
 
-A ``greeting`` plugin with a function to set itself up:
+A ``greeting`` plugin with a ``wired_setup`` function to set itself up:
 
 .. literalinclude:: ../samples/app_plugin_site/plugins/greeting/__init__.py
 
-And finally a site that uses the two.
-In this case, the *site* does the plugin setup -- we will move that in the next step to the app:
+The plugin's component doesn't change much:
+
+.. literalinclude:: ../samples/app_plugin_site/plugins/greeting/component.py
+
+And finally a site that uses the pluggable app and the plugin:
 
 .. literalinclude:: ../samples/app_plugin_site/site/__init__.py
+
+The site now has a "view" that can render a request.
+
+.. literalinclude:: ../samples/app_plugin_site/site/views.py
+
 
 app_decorators_render
 =====================
 
-We now switch to an app which can register plugins, passing them the registry for self-configuration.
+We now switch to an app which can register decorator-based plugins, passing them the registry for self-configuration.
 
-The pluggable app is richer, including a ``venusian`` decorator scanner:
+The pluggable app is richer, including a ``venusian`` decorator scanner.
+You can now tell the app to setup a plugin module:
 
 .. literalinclude:: ../samples/app_decorators_render/site/__init__.py
 
-The plugin has an entry point to register itself, getting passed the app instance:
+The plugin's ``wired_setup`` can now register itself, getting passed the app instance:
 
 .. literalinclude:: ../samples/app_decorators_render/plugins/greeting/__init__.py
 
@@ -72,14 +81,15 @@ We again have a site:
 
 .. literalinclude:: ../samples/app_decorators_render/site/__init__.py
 
-But this time, the site has a "view" which handles the response:
+But this time, the site has a "view" which handles the response.
+It uses the plugin's ``Greeting`` component:
 
 .. literalinclude:: ../samples/app_decorators_render/site/views.py
 
 override
 ========
 
-Now we get into the strength of ``viewdom_wired``: a registration which replaces a component from another package.
+Now we get into the strength of ``viewdom_wired``: a registration which *replaces* component from another package.
 
 Nothing changes in the pluggable app nor in the plugins.
 The site is in control: it can register replacements.

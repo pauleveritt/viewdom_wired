@@ -5,6 +5,7 @@ The features in this app would be grafted into
 """
 
 from dataclasses import dataclass, field
+from types import ModuleType
 from typing import Optional, Type
 
 from venusian import Scanner
@@ -21,10 +22,10 @@ class App:
     def __post_init__(self):
         self.scanner = Scanner(registry=self.registry)
 
-    def setup(self, module):
+    def setup(self, module: ModuleType):
         """ Call a plugin's setup function """
 
-        s = getattr(module, 'setup')
+        s = getattr(module, 'wired_setup')
         s(self)
 
     def render(self, vdom, context=Optional[Type]) -> str:

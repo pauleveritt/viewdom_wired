@@ -2,10 +2,10 @@
 A package for a site that uses an installed app and some plugins.
 """
 
-from .views import greeting_view
-from ..app import App
-from ..plugins import greeting
 from . import components
+from .views import greeting_view
+from ..plugins import greeting
+from ...app_decorators_render.app import App
 
 
 def site_startup() -> App:
