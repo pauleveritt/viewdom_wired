@@ -158,3 +158,43 @@ The site then makes a local flavor of the ``Greeter`` component, for use with th
 The template in the view doesn't have to change.
 Any other components that use a ``Greeting`` component, don't have to change.
 They just get a ``FrenchGreeting`` in appropriate cases.
+
+Protocols: hello_logo
+=====================
+
+In ``overrides`` we saw an example of a ``Greeting`` component, from a plugin, which was *replaced* with site-specific ``Greeting``.
+Then in ``custom_context`` we saw a very useful variation of that: use ``Greeting`` most of the time, but replace it with ``FrenchGreeting`` for a certain context.
+The caller didn't know that ``FrenchGreeting`` even existed...it asked for a ``Greeting`` but got a different implementation.
+
+There are two flaws, though:
+
+- The definition of a ``Greeting`` is an *implementation*. It sure would be nice if ``Greeting`` was abstract, all implementations equal, and any one implementation could be removed.
+
+- There's no *contract*. How do you know if you made a kind of ``Greeter``?
+
+In these next examples we switch to using `PEP 544 Protocols <https://www.python.org/dev/peps/pep-0544/>`_.
+With these, when a template asks for a ``Greeter``, it is referring to an abstract "Greeter".
+Each implementation in the registry says "I'm a kind of ``Greeter``."
+Even better, ``mypy`` can do some (rudimentary) confirmation of the contract.
+
+We will start with a good example of the problem being solved, before adding PEP 544 protocols:
+
+- A site is using a pluggable app which has a default navbar that contains a logo
+
+- The site *also* installs a plugin which customizes the logo with one that has no ``alt``
+
+We start with the pluggable app.
+It has two components:
+
+.. literalinclude:: ../samples/protocols_hello_logo/site/components.py
+
+The ``logo`` plugin, though, replaces once of those components:
+
+.. literalinclude:: ../samples/custom_context/plugins/logo/components.py
+
+When the site's view renders, it gets a navbar containing an image, but with no logo:
+
+.. code-block:: html
+
+  <nav><img src="logo.png"/></nav>
+

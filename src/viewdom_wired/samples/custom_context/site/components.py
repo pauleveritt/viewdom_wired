@@ -7,6 +7,7 @@ from viewdom_wired import component
 from .contexts import FrenchCustomer
 from ..plugins.greeting import Greeting
 
+
 # Customizability:
 # This replaces lookups for Greeting, but only
 # when the context is a FrenchCustomer

@@ -33,10 +33,15 @@ def test_samples_context():
     assert main() == '<h1>Hello Mary</h1>'
 
 
-def test_samples_site_context():
+def test_samples_custom_context():
     from viewdom_wired.samples.custom_context.site import main
     results = main()
     regular_result = results['regular_result']
     assert regular_result == '<h1>Hello Mary</h1>'
     french_result = results['french_result']
     assert french_result == '<h1>Bonjour Marie</h1>'
+
+
+def test_samples_protocols_hello_logo():
+    from viewdom_wired.samples.protocols_hello_logo.site import main
+    assert main() == '<nav><img src="logo.png"/></nav>'

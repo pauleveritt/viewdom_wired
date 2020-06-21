@@ -5,6 +5,7 @@ from ..plugins import logo
 
 def site_startup() -> App:
     app = App()
+    # This site installed some plugins, load them
     app.setup(logo)
     return app
 
