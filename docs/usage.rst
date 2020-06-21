@@ -9,9 +9,11 @@ All of these examples are in the repository's ``samples`` directory with tests t
 hello_world
 ===========
 
-The simplest possible example. A single function which recreates the universe whenever it is run:
+The simplest possible example:
+A single function which recreates the universe whenever it is run:
 
-.. literalinclude:: ../samples/hello_world/__init__.py
+.. literalinclude:: ../samples/hello_world/app.py
+
 
 hello_app
 =========
