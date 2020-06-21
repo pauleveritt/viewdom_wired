@@ -38,15 +38,16 @@ app_plugin_site
 
 Let's re-organize the layout to emphasize the 3 roles: app, plugins, and a site.
 
-The app:
+The app, which stores the registry:
 
 .. literalinclude:: ../samples/app_plugin_site/site/__init__.py
 
-A ``greeting`` plugin:
+A ``greeting`` plugin with a function to set itself up:
 
 .. literalinclude:: ../samples/app_plugin_site/plugins/greeting/__init__.py
 
-And finally a site that uses the two:
+And finally a site that uses the two.
+In this case, the *site* does the plugin setup -- we will move that in the next step to the app:
 
 .. literalinclude:: ../samples/app_plugin_site/site/__init__.py
 
