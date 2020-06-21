@@ -1,49 +1,10 @@
 from dataclasses import fields, Field, MISSING
-from typing import get_type_hints, Callable, Optional, Any, Type
+from typing import get_type_hints
 
-from venusian import Scanner, attach
 from viewdom import Context, VDOM
 from viewdom.h import flatten, escape, encode_prop
-from wired import ServiceContainer, ServiceRegistry
+from wired import ServiceContainer
 from wired.dataclasses import Context as WiredContext
-
-
-def register_component(
-        registry: ServiceRegistry,
-        for_: Callable,
-        target: Callable=None,
-        context: Optional[Any] = None
-):
-    """ Imperative form of the component decorator """
-
-    def component_factory(container: ServiceContainer):
-        return target if target else for_
-
-    registry.register_factory(
-        component_factory, for_, context=context
-    )
-
-
-class component:
-    def __init__(self, for_: type = None, context: Type = None):
-        self.for_ = for_
-        self.context = context
-
-    def __call__(self, wrapped):
-
-        def callback(scanner: Scanner, name: str, cls):
-            for_ = self.for_ if self.for_ else cls
-            registry: ServiceRegistry = getattr(scanner, 'registry')
-
-            register_component(
-                registry,
-                for_,
-                target=cls,
-                context=self.context,
-            )
-
-        attach(wrapped, callback, category='wired_component')
-        return wrapped
 
 
 def relaxed_call(container: ServiceContainer, callable_, **kwargs):
