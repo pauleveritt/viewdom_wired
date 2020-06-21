@@ -1,5 +1,6 @@
 from .protocols import Component
 from .render import render, component, register_component
+from . import samples
 
 __version__ = '0.1.0'
 
@@ -8,4 +9,5 @@ __all__ = [
     'component',
     'register_component',
     'render',
+    'samples',
 ]
