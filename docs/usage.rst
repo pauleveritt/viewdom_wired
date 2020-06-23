@@ -4,7 +4,7 @@ Usage With Classes
 
 Let's write a basic application using the pluggability ideas in ``viewdom_wired``.
 We'll start with something very basic and gradually introduce some of the basic ideas.
-All of these examples are in the repository's ``samples`` directory with tests that cover them in the ``tests`` directory.
+All of these examples are in the repository's ``examples`` directory with tests that cover them in the ``tests`` directory.
 
 hello_world
 ===========
@@ -12,7 +12,7 @@ hello_world
 The simplest possible example:
 A single function which recreates the universe whenever it is run:
 
-.. literalinclude:: ../samples/hello_world/app.py
+.. literalinclude:: ../examples/hello_world/app.py
 
 
 hello_app
@@ -23,15 +23,15 @@ Let's show a case that splits the three roles.
 
 First, a pluggable app:
 
-.. literalinclude:: ../samples/hello_app/app.py
+.. literalinclude:: ../examples/hello_app/app.py
 
 Then, a third-party plugin for the app, providing a component that can be used in a site:
 
-.. literalinclude:: ../samples/hello_app/components.py
+.. literalinclude:: ../examples/hello_app/components.py
 
 Finally, the site itself, which uses the app and the third-party plugin to render a response:
 
-.. literalinclude:: ../samples/hello_app/site.py
+.. literalinclude:: ../examples/hello_app/site.py
 
 app_plugin_site
 ===============
@@ -40,23 +40,23 @@ Let's re-organize the layout to emphasize the 3 roles: app, plugins, and a site.
 
 The app, which stores the registry:
 
-.. literalinclude:: ../samples/app_plugin_site/site/__init__.py
+.. literalinclude:: ../examples/app_plugin_site/site/__init__.py
 
 A ``greeting`` plugin with a ``wired_setup`` function to set itself up:
 
-.. literalinclude:: ../samples/app_plugin_site/plugins/greeting/__init__.py
+.. literalinclude:: ../examples/app_plugin_site/plugins/greeting/__init__.py
 
 The plugin's component doesn't change much:
 
-.. literalinclude:: ../samples/app_plugin_site/plugins/greeting/component.py
+.. literalinclude:: ../examples/app_plugin_site/plugins/greeting/component.py
 
 And finally a site that uses the pluggable app and the plugin:
 
-.. literalinclude:: ../samples/app_plugin_site/site/__init__.py
+.. literalinclude:: ../examples/app_plugin_site/site/__init__.py
 
 The site now has a "view" that can render a request.
 
-.. literalinclude:: ../samples/app_plugin_site/site/views.py
+.. literalinclude:: ../examples/app_plugin_site/site/views.py
 
 
 app_decorators_render
@@ -67,24 +67,24 @@ We now switch to an app which can register decorator-based plugins, passing them
 The pluggable app is richer, including a ``venusian`` decorator scanner.
 You can now tell the app to setup a plugin module:
 
-.. literalinclude:: ../samples/app_decorators_render/site/__init__.py
+.. literalinclude:: ../examples/app_decorators_render/site/__init__.py
 
 The plugin's ``wired_setup`` can now register itself, getting passed the app instance:
 
-.. literalinclude:: ../samples/app_decorators_render/plugins/greeting/__init__.py
+.. literalinclude:: ../examples/app_decorators_render/plugins/greeting/__init__.py
 
 The plugin has a component:
 
-.. literalinclude:: ../samples/app_decorators_render/plugins/greeting/greeting.py
+.. literalinclude:: ../examples/app_decorators_render/plugins/greeting/greeting.py
 
 We again have a site:
 
-.. literalinclude:: ../samples/app_decorators_render/site/__init__.py
+.. literalinclude:: ../examples/app_decorators_render/site/__init__.py
 
 But this time, the site has a "view" which handles the response.
 It uses the plugin's ``Greeting`` component:
 
-.. literalinclude:: ../samples/app_decorators_render/site/views.py
+.. literalinclude:: ../examples/app_decorators_render/site/views.py
 
 override
 ========
@@ -96,16 +96,16 @@ The site is in control: it can register replacements.
 
 Here is the site, which now scans for local components which might add to *or replace* components:
 
-.. literalinclude:: ../samples/override/site/__init__.py
+.. literalinclude:: ../examples/override/site/__init__.py
 
 The site now has a components file:
 
-.. literalinclude:: ../samples/override/site/components.py
+.. literalinclude:: ../examples/override/site/components.py
 
 The site's ``views.py`` remains the same.
 When its template asks for a ``Greeting`` component, a different implementation is provided.
 
-.. literalinclude:: ../samples/override/site/views.py
+.. literalinclude:: ../examples/override/site/views.py
 
 One thing that is nice about this: we didn't use subclassing to establish the is-a relationship between ``Greeting`` and ``SiteGreeting``.
 Instead, the registration handled this with the ``for_``.
@@ -118,7 +118,7 @@ They can ask the injector to get information for them, for example, from the ``w
 
 The app changes, as ``render`` now accepts a context, which it puts in the container:
 
-.. literalinclude:: ../samples/context/app/__init__.py
+.. literalinclude:: ../examples/context/app/__init__.py
 
 Here's a **big** point: the component asks the *injector* to get the *context*.
 Thus, the parent components don't have to pass this all the way down.
@@ -128,15 +128,15 @@ Moreover, the injector is asked to get a specific attribute off the context, whi
 
 - The component has a smaller surface area with the outside world, instead of getting the entire context
 
-.. literalinclude:: ../samples/context/plugins/greeting/greeting.py
+.. literalinclude:: ../examples/context/plugins/greeting/greeting.py
 
 The site defines different kinds of contexts:
 
-.. literalinclude:: ../samples/context/site/contexts.py
+.. literalinclude:: ../examples/context/site/contexts.py
 
 The site then makes a context to use during rendering:
 
-.. literalinclude:: ../samples/context/site/__init__.py
+.. literalinclude:: ../examples/context/site/__init__.py
 
 Of course in a bigger system, the pluggable app might handle creating the context, e.g. by looking at the incoming URL.
 
@@ -149,11 +149,11 @@ The plugin can then provide a component for the default and a different implemen
 
 We now have two kinds of context:
 
-.. literalinclude:: ../samples/custom_context/site/contexts.py
+.. literalinclude:: ../examples/custom_context/site/contexts.py
 
 The site then makes a local flavor of the ``Greeter`` component, for use with the new kind of context:
 
-.. literalinclude:: ../samples/custom_context/site/components.py
+.. literalinclude:: ../examples/custom_context/site/components.py
 
 The template in the view doesn't have to change.
 Any other components that use a ``Greeting`` component, don't have to change.
@@ -186,11 +186,11 @@ We will start with a good example of the problem being solved, before adding PEP
 We start with the pluggable app.
 It has two components:
 
-.. literalinclude:: ../samples/protocols_hello_logo/site/components.py
+.. literalinclude:: ../examples/protocols_hello_logo/site/components.py
 
 The ``logo`` plugin, though, replaces once of those components:
 
-.. literalinclude:: ../samples/custom_context/plugins/logo/components.py
+.. literalinclude:: ../examples/custom_context/plugins/logo/components.py
 
 When the site's view renders, it gets a navbar containing an image, but with no logo:
 
@@ -205,7 +205,7 @@ This example has a fundamental change.
 The pluggable app still has ``Navbar`` and ``Logo``, but they are *protocols*.
 They aren't actual components, just the abstract definition of the contract:
 
-.. literalinclude:: ../samples/logo_protocol/app/protocols.py
+.. literalinclude:: ../examples/logo_protocol/app/protocols.py
 
 That looks pretty cool: anybody that wants to make a different kind of "Logo" will now know exactly what's required.
 From a component perspective, the fields roughly conform to the "props" that need to be passed in when a template uses a component.
@@ -217,7 +217,7 @@ Each protocol subclasses from two bases.
 
 The pluggable app then ships with component implementations of each protocol:
 
-.. literalinclude:: ../samples/logo_protocol/app/components.py
+.. literalinclude:: ../examples/logo_protocol/app/components.py
 
 Like we saw earlier, the ``@component`` decorator says it is ``for_=Logo``.
 But this time, ``Logo`` isn't a component implementation.
@@ -225,11 +225,11 @@ Instead, we are saying the following is an implementation of the abstract idea o
 
 The plugin then overrides just the logo:
 
-.. literalinclude:: ../samples/logo_protocol/plugins/logo/components.py
+.. literalinclude:: ../examples/logo_protocol/plugins/logo/components.py
 
 Finally, in the site's view, we use ``Navbar`` in a template:
 
-.. literalinclude:: ../samples/logo_protocol/site/views.py
+.. literalinclude:: ../examples/logo_protocol/site/views.py
 
 But the ``Navbar`` that we import is the *protocol* not a particular implementation.
 
@@ -249,11 +249,11 @@ We need a way to tell the type checker that we have some that adheres to a parti
 
 Here is an ``@adherent`` decorator which does so:
 
-.. literalinclude:: ../samples/adherent/app/decorator.py
+.. literalinclude:: ../examples/adherent/app/decorator.py
 
 The pluggable app's default implementations now additionally say that they "adhere" to this protocol:
 
-.. literalinclude:: ../samples/adherent/app/components.py
+.. literalinclude:: ../examples/adherent/app/components.py
 
 For now it is an extra decorator, used for systems that embrace PEP 544 protocols.
 

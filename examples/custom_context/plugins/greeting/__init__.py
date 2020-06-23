@@ -2,7 +2,7 @@
 A plugin that can be installed with pip and then register its components.
 """
 
-from viewdom_wired.samples.context.app import App
+from examples.context.app import App
 from . import greeting
 from .greeting import Greeting
 

@@ -31,7 +31,7 @@ Minimum Example
 
 Register a component that will be used only in a certain circumstance:
 
-.. literalinclude:: ../samples/custom_context/site/components.py
+.. literalinclude:: ../examples/custom_context/site/components.py
     :start-after: Customizability
 
 

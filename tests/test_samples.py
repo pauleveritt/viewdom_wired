@@ -1,40 +1,40 @@
 def test_samples_hello_world():
-    from viewdom_wired.samples.hello_world.app import main
+    from examples.hello_world.app import main
     assert main() == '<h1>Hello viewdom_wired</h1>'
 
 
 def test_samples_hello_app():
-    from viewdom_wired.samples.hello_app.site import main
+    from examples.hello_app.site import main
     assert main() == '<h1>Hello viewdom_wired</h1>'
 
 
 def test_samples_app_plugin_site():
-    from viewdom_wired.samples.app_plugin_site.site import main
+    from examples.app_plugin_site.site import main
     assert main() == '<h1>Hello viewdom_wired</h1>'
 
 
 def test_samples_app_decorators_render():
-    from viewdom_wired.samples.app_decorators_render.site import main
+    from examples.app_decorators_render.site import main
     assert main() == '<h1>Hello viewdom_wired</h1>'
 
 
 def test_samples_subcomponents_render():
-    from viewdom_wired.samples.subcomponents.site import main
+    from examples.subcomponents.site import main
     assert main() == '<h1>Hello viewdom_wired<span>!</span></h1>'
 
 
 def test_samples_override():
-    from viewdom_wired.samples.override.site import main
+    from examples.override.site import main
     assert main() == '<h1>Hello My Site</h1>'
 
 
 def test_samples_context():
-    from viewdom_wired.samples.context.site import main
+    from examples.context.site import main
     assert main() == '<h1>Hello Mary</h1>'
 
 
 def test_samples_custom_context():
-    from viewdom_wired.samples.custom_context.site import main
+    from examples.custom_context.site import main
     results = main()
     regular_result = results['regular_result']
     assert regular_result == '<h1>Hello Mary</h1>'
@@ -43,15 +43,15 @@ def test_samples_custom_context():
 
 
 def test_samples_protocols_hello_logo():
-    from viewdom_wired.samples.protocols_hello_logo.site import main
+    from examples.protocols_hello_logo.site import main
     assert main() == '<nav><img src="logo.png"/></nav>'
 
 
 def test_samples_logo_protocol():
-    from viewdom_wired.samples.logo_protocol.site import main
+    from examples.logo_protocol.site import main
     assert main() == '<nav><img alt="No alt Needed" src="logo.png"/></nav>'
 
 
 def test_samples_adherent():
-    from viewdom_wired.samples.adherent.site import main
+    from examples.adherent.site import main
     assert main() == '<nav><img src="logo.png" title="No alt Needed"/></nav>'

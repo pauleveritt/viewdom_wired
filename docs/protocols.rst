@@ -18,26 +18,21 @@ hello_logo
 We have a pluggable app that ships with its own components: a ``Navbar`` which has a ``Logo`` subcomponent.
 The app changes slightly to scan the ``components.py`` module for registrations:
 
-.. literalinclude:: ../samples/protocols/hello_logo/app/app.py
+.. literalinclude:: ../examples/protocols_hello_logo/app/app.py
 
 The two built-in components:
 
-.. literalinclude:: ../samples/protocols/hello_logo/app/components.py
+.. literalinclude:: ../examples/protocols_hello_logo/app/components.py
 
 The site is using a plugin which replaces the built-in logo with one that allows an ``alt`` value:
 
-.. literalinclude:: ../samples/protocols/hello_logo/plugins/logo/components.py
+.. literalinclude:: ../examples/protocols_hello_logo/plugins/logo/components.py
 
 The site has a view with a template which renders a ``Navbar``:
 
-.. literalinclude:: ../samples/protocols/hello_logo/site/views.py
+.. literalinclude:: ../examples/protocols_hello_logo/site/views.py
 
 The result is ``'<nav><img src="logo.png" alt="Logo"/></nav>'``.
-
-If you look at the test, you can see how we constructed an instance, but used a type hint to say this was a "Logo":
-
-.. literalinclude:: ../tests/samples/protocols/test_hello_logo.py
-    :emphasize-lines: 7
 
 Sure, the tests pass.
 But ``NoAltLogo`` isn't a kind of ``Logo``.
@@ -54,7 +49,7 @@ First, let's break the concept from the implementation: ``Logo`` will be a PEP 5
 
 The pluggable app will define the ``Logo`` protocol then provide a ``DefaultLogo`` implementation of that protocol:
 
-.. literalinclude:: ../samples/protocols/logo_protocol/plugins/logo/components.py
+.. literalinclude:: ../examples/logo_protocol/plugins/logo/components.py
 
 The ``NoAltLogo`` component in the plugin doesn't need to change.
 But when it says it is ``for_=Logo``, it's "for" a protocol, not a particular implementation of that protocol.
@@ -76,15 +71,15 @@ adherent
 In the ``mypy`` tracker, Glyph `pointed to a decorator <https://github.com/python/mypy/issues/4717#issuecomment-454609539>`_ which could say "the following class implements a certain protocol."
 Let's use it.
 
-.. literalinclude:: ../samples/protocols/adherent/app/decorators.py
+.. literalinclude:: ../examples/adherent/app/decorators.py
 
 The built-in ``DefaultLogo`` needs to say it adheres to the ``Logo`` protocol:
 
-.. literalinclude:: ../samples/protocols/adherent/plugins/logo/components.py
+.. literalinclude:: ../examples/adherent/plugins/logo/components.py
 
 The plugin's component needs to adhere as well:
 
-.. literalinclude:: ../samples/protocols/adherent/plugins/logo/components.py
+.. literalinclude:: ../examples/adherent/plugins/logo/components.py
 
 Unlike ``zope.interface``, ``mypy`` won't immediately validate conformance.
 You have to use the component somewhere.
