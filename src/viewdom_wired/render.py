@@ -1,7 +1,7 @@
 from dataclasses import fields, Field, MISSING
 from typing import get_type_hints
 
-from viewdom import Context, VDOM
+from viewdom import Context, VDOMNode
 from viewdom.h import flatten, escape, encode_prop
 from wired import ServiceContainer
 from wired.dataclasses import Context as WiredContext
@@ -113,7 +113,7 @@ def render(value, container: ServiceContainer, **kwargs):
 
 def render_gen(value, container: ServiceContainer):
     for item in flatten(value):
-        if isinstance(item, VDOM):
+        if isinstance(item, VDOMNode):
             tag, props, children = item.tag, item.props, item.children
             if callable(tag):
                 yield from render_gen(relaxed_call(container, tag, children=children, **props), container)
