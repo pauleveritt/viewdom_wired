@@ -2,12 +2,12 @@ from dataclasses import fields, Field, MISSING
 from typing import get_type_hints
 
 from viewdom import Context
-from viewdom.h import flatten, escape, encode_prop, VDOMNode
+from viewdom.h import flatten, escape, encode_prop, VDOMNode, VDOM
 from wired import ServiceContainer
 from wired.dataclasses import Context as WiredContext
 
 
-def relaxed_call(container: ServiceContainer, callable_, **kwargs):
+def make_component(container: ServiceContainer, callable_, **kwargs):
     context = container.context
     target = container.get(callable_)
     props = kwargs
@@ -104,6 +104,12 @@ def relaxed_call(container: ServiceContainer, callable_, **kwargs):
 
     # Now construct an instance of the target dataclass
     component = target(**args)
+    return component
+
+
+def relaxed_call(container: ServiceContainer, callable_, **kwargs) -> VDOM:
+    """ Make a component instance then call its __call__, returning a VDOM """
+    component = make_component(container, callable_, **kwargs)
     return component()
 
 

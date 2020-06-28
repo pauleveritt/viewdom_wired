@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 import pytest
-from wired import ServiceRegistry
+from wired import ServiceRegistry, ServiceContainer
 from wired.dataclasses import factory, register_dataclass
 
 
@@ -22,3 +22,9 @@ def registry() -> ServiceRegistry:
     scanner.scan(current_module)
     register_dataclass(registry, Settings)
     return registry
+
+
+@pytest.fixture
+def container(registry) -> ServiceContainer:
+    c = registry.create_container()
+    return c
