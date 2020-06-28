@@ -7,13 +7,6 @@ from wired import ServiceContainer, ServiceRegistry
 protocol = TypeVar("protocol")
 
 
-def adherent(c: Callable[[], protocol]) -> Callable[[Type[protocol]], Type[protocol]]:
-    def decor(input_value: Type[protocol]) -> Type[protocol]:
-        return input_value
-
-    return decor
-
-
 def register_component(
         registry: ServiceRegistry,
         for_: Callable,
@@ -49,6 +42,13 @@ class component:
 
         attach(wrapped, callback, category='wired_component')
         return wrapped
+
+
+def adherent(c: Callable[[], protocol]) -> Callable[[Type[protocol]], Type[protocol]]:
+    def decor(input_value: Type[protocol]) -> Type[protocol]:
+        return input_value
+
+    return decor
 
 
 class component2:
