@@ -1,12 +1,11 @@
 from dataclasses import dataclass
 
+from viewdom.h import html, VDOM
 from wired import ServiceRegistry
 
-from viewdom.h import html, VDOM
-from viewdom_wired import component, register_component
+from viewdom_wired import register_component
 
 
-@component()
 @dataclass
 class Heading:
     name: str = 'Hello'
