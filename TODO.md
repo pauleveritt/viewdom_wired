@@ -1,5 +1,7 @@
 # TODO
 
+- Allow DI to work on generics such as `Optional`, `Tuple`
+
 ## Refactor Samples
 
 - Make a base protocol for Component with the __call__ -> VDOM
