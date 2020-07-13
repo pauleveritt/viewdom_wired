@@ -1,5 +1,3 @@
-from typing import Iterable
-
 from typing_extensions import Protocol
 from viewdom import VDOM
 
