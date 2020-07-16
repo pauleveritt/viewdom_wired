@@ -4,6 +4,14 @@ from viewdom import html, VDOM
 
 
 @dataclass
+class Block:
+    def __call__(self) -> VDOM:
+        return html('''\n
+        1
+        ''')
+
+
+@dataclass
 class Layout:
     """ A layout that governs all the site """
     navitems: VDOM = html('<span>Layout1</span>')
