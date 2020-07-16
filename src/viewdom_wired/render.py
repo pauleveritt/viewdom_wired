@@ -67,6 +67,14 @@ def make_component(container: ServiceContainer, callable_, **kwargs):
             args[field_name] = field_value
             continue
 
+        # Is the field_type a generic from typing? For example, Tuple[str, ...]
+        import typing
+        from inspect import getmodule
+        if getmodule(field_type) is typing:
+            # We expect this case to have a default value
+            args[field_name] = getattr(full_field, 'default', None)
+            continue
+
         # Now the general case, something like url: Url
         try:
             field_value = container.get(field_type)
