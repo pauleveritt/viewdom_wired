@@ -14,6 +14,16 @@ A single function which recreates the universe whenever it is run:
 
 .. literalinclude:: ../examples/hello_world/app.py
 
+hello_children
+==============
+
+Same example, but the injector respects the special flag of children, to allow the component to be passed in some contained nodes.
+
+.. literalinclude:: ../examples/hello_children/app.py
+
+In this example, the template uses ``Greeting`` and passes a span.
+The component says it accepts children and provides a default template to use if none are provided.
+If this component's doesn't use ``children``, it should simply delete the field, but it can also provide a default value of an empty tuple ``()``.
 
 hello_app
 =========

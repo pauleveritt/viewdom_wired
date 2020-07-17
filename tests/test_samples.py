@@ -3,6 +3,11 @@ def test_samples_hello_world():
     assert main() == '<h1>Hello viewdom_wired</h1>'
 
 
+def test_samples_hello_children():
+    from examples.hello_children.app import main
+    assert '<h1>Hello viewdom_wired</h1><span>Children</span>' == main()
+
+
 def test_samples_hello_app():
     from examples.hello_app.site import main
     assert main() == '<h1>Hello viewdom_wired</h1>'

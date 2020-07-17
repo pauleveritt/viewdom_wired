@@ -7,7 +7,7 @@ from wired import ServiceContainer
 from wired.dataclasses import Context as WiredContext
 
 
-def make_component(container: ServiceContainer, callable_, **kwargs):
+def make_component(container: ServiceContainer, callable_, children=None, **kwargs):
     context = container.context
     target = container.get(callable_)
     props = kwargs
@@ -23,9 +23,22 @@ def make_component(container: ServiceContainer, callable_, **kwargs):
     # Iterate through the dataclass fields
     for field_name, field_type in get_type_hints(target).items():
 
-        # Highest precedence: this field occurs in the passed-in
+        # First: Special case a field named "children" which reflects the
+        # possibly-existing child nodes.
+        if field_name == 'children':
+            if children:
+                # We were "passed" some children as subnodes
+                args[field_name] = children
+            else:
+                # Better have something as a field default
+                full_field = fields_mapping[field_name]
+                args[field_name] = full_field.default
+            continue
+
+        # Next-highest precedence: this field occurs in the passed-in
         # props. Check there first.
         if props and field_name in props:
+            prop_value = props[field_name]
             args[field_name] = props[field_name]
             continue
 
@@ -115,9 +128,9 @@ def make_component(container: ServiceContainer, callable_, **kwargs):
     return component
 
 
-def relaxed_call(container: ServiceContainer, callable_, **kwargs) -> VDOM:
+def relaxed_call(container: ServiceContainer, callable_, children=None, **kwargs) -> VDOM:
     """ Make a component instance then call its __call__, returning a VDOM """
-    component = make_component(container, callable_, **kwargs)
+    component = make_component(container, callable_, children=children, **kwargs)
     return component()
 
 
