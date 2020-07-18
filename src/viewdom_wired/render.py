@@ -108,7 +108,7 @@ def make_component(container: ServiceContainer, callable_, children=None, parent
         try:
             field_value = container.get(field_type)
             args[field_name] = field_value
-        except TypeError:
+        except (TypeError, LookupError):
             # Seems that wired, when looking up str, gives:
             #   TypeError: can't set attributes of bui...sion type 'str'
             # We will use that to our advantage to look for a dataclass
@@ -124,19 +124,10 @@ def make_component(container: ServiceContainer, callable_, children=None, parent
                     msg = f'Field "{field_name}" {m}'
                     raise LookupError(msg)
                 continue
+            elif hasattr(target, '__post_init__'):
+                continue
             else:
                 msg = f'No default value on field {field_name}'
-                raise LookupError(msg)
-        except LookupError:
-            # Give up and work around ``wired`` unhelpful exception
-            # by adding some context information.
-
-            # Note that a dataclass with ``__post_init__`` might still
-            # do some construction. Only do this next part if there's
-            # no __post_init__
-            if not hasattr(target, '__post_init__'):
-                m = 'Injector failed for'
-                msg = f'{m} {field_name} on {target.__name__}'
                 raise LookupError(msg)
 
     # Now construct an instance of the target dataclass
@@ -160,13 +151,13 @@ def render_gen(value, container: ServiceContainer, children=None, parent_compone
             tag, props, children = item.tag, item.props, item.children
             if callable(tag):
                 component = relaxed_call(
-                        container,
-                        tag,
-                        children=children,
-                        parent_component=parent_component,
-                        **props
-                    )
-                parent_component=component
+                    container,
+                    tag,
+                    children=children,
+                    parent_component=parent_component,
+                    **props
+                )
+                parent_component = component
                 yield from render_gen(
                     component(),
                     container,
