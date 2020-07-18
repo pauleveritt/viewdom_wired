@@ -2,12 +2,12 @@ from dataclasses import fields, Field, MISSING
 from typing import get_type_hints
 
 from viewdom import Context
-from viewdom.h import flatten, escape, encode_prop, VDOMNode, VDOM
+from viewdom.h import flatten, escape, encode_prop, VDOMNode
 from wired import ServiceContainer
 from wired.dataclasses import Context as WiredContext
 
 
-def make_component(container: ServiceContainer, callable_, children=None, **kwargs):
+def make_component(container: ServiceContainer, callable_, children=None, parent_component=None, **kwargs):
     context = container.context
     target = container.get(callable_)
     props = kwargs
@@ -33,6 +33,22 @@ def make_component(container: ServiceContainer, callable_, children=None, **kwar
                 # Better have something as a field default
                 full_field = fields_mapping[field_name]
                 args[field_name] = full_field.default
+            continue
+
+        # Another name-based special case..."parent_children" means to get
+        # the value from the parent component's default field value for
+        # "parent_children". Used to implement Jinja2-style blocks.
+        if field_name == 'parent_children':
+            # We have to use fields on the parent to get at the default value
+            parent_fields = fields(parent_component)
+
+            # Get the first field that matches the <{Block} name="fieldname"> name
+            parent_field = next(f for f in parent_fields if f.name == props['name'])
+
+            # Now that you have the correct field on the parent's dataclass, get its
+            # default value
+            parent_value = parent_field.default
+            args['parent_children'] = parent_value
             continue
 
         # Next-highest precedence: this field occurs in the passed-in
@@ -128,22 +144,35 @@ def make_component(container: ServiceContainer, callable_, children=None, **kwar
     return component
 
 
-def relaxed_call(container: ServiceContainer, callable_, children=None, **kwargs) -> VDOM:
+def relaxed_call(container: ServiceContainer, callable_, children=None, parent_component=None, **kwargs):
     """ Make a component instance then call its __call__, returning a VDOM """
-    component = make_component(container, callable_, children=children, **kwargs)
-    return component()
+    component = make_component(container, callable_, children=children, parent_component=parent_component, **kwargs)
+    return component
 
 
 def render(value, container: ServiceContainer, **kwargs):
-    return "".join(render_gen(Context(value, **kwargs), container=container))
+    return "".join(render_gen(Context(value, **kwargs), container=container, children=None, parent_component=None))
 
 
-def render_gen(value, container: ServiceContainer):
+def render_gen(value, container: ServiceContainer, children=None, parent_component=None):
     for item in flatten(value):
         if isinstance(item, VDOMNode):
             tag, props, children = item.tag, item.props, item.children
             if callable(tag):
-                yield from render_gen(relaxed_call(container, tag, children=children, **props), container)
+                component = relaxed_call(
+                        container,
+                        tag,
+                        children=children,
+                        parent_component=parent_component,
+                        **props
+                    )
+                parent_component=component
+                yield from render_gen(
+                    component(),
+                    container,
+                    children,
+                    parent_component
+                )
                 continue
 
             yield f"<{escape(tag)}"
@@ -152,7 +181,7 @@ def render_gen(value, container: ServiceContainer):
 
             if children:
                 yield ">"
-                yield from render_gen(children, container)
+                yield from render_gen(children, container, parent_component=parent_component)
                 yield f'</{escape(tag)}>'
             else:
                 yield f'/>'

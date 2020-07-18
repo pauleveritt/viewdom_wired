@@ -59,9 +59,10 @@ def test_samples_logo_protocol():
 
 def test_samples_adherent():
     from examples.adherent.site import main
-    assert main() == '<nav><img src="logo.png" title="No alt Needed"/></nav>'
+    assert '<nav><img src="logo.png" title="No alt Needed"/></nav>' == main()
 
 
 def test_samples_blocks():
     from examples.blocks.site import main
-    assert '<body><nav><span>Page1</span></nav></body>' == main()
+    expected = '<nav><span>Default Choice</span><span>Extra Choice</span></nav><main>The Page</main>'
+    assert expected == main()
