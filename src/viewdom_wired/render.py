@@ -23,7 +23,14 @@ def make_component(container: ServiceContainer, callable_, children=None, parent
     # Iterate through the dataclass fields
     for field_name, field_type in get_type_hints(target).items():
 
-        # First: Special case a field named "children" which reflects the
+        full_field: Field = fields_mapping[field_name]
+
+        # ----  Special cases to bail out early on
+        # Field has init=False which means, don't initialize
+        if full_field.init is False:
+            continue
+
+        # Field named "children" which reflects the
         # possibly-existing child nodes.
         if field_name == 'children':
             if children:
@@ -31,7 +38,6 @@ def make_component(container: ServiceContainer, callable_, children=None, parent
                 args[field_name] = children
             else:
                 # Better have something as a field default
-                full_field = fields_mapping[field_name]
                 args[field_name] = full_field.default
             continue
 
