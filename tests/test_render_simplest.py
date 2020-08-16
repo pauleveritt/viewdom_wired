@@ -62,3 +62,16 @@ def test_wired_renderer_simplest_init_false(registry: ServiceRegistry):
     expected = '<div>Paul Everitt</div>'
     actual = render(html('''<{Person} first_name="Paul" last_name="Everitt"/>'''), container)
     assert expected == actual
+
+
+def test_wired_renderer_non_void(registry: ServiceRegistry):
+    @dataclass
+    class NonVoid:
+        def __call__(self):
+            return html('<i class="icon"></i>')
+    from viewdom_wired import render
+    container = registry.create_container()
+    register_component(registry, NonVoid)
+    expected = '<i class="icon"></i>'
+    actual = render(html('''<{NonVoid} />'''), container)
+    assert expected == actual

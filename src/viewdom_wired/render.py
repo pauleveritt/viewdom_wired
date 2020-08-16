@@ -2,7 +2,7 @@ from dataclasses import fields, Field, MISSING
 from typing import get_type_hints
 
 from viewdom import Context
-from viewdom.h import flatten, escape, encode_prop, VDOMNode
+from viewdom.h import flatten, escape, encode_prop, VDOMNode, VOIDS
 from wired import ServiceContainer
 from wired.dataclasses import Context as WiredContext
 
@@ -180,7 +180,9 @@ def render_gen(value, container: ServiceContainer, children=None, parent_compone
                 yield ">"
                 yield from render_gen(children, container, parent_component=parent_component)
                 yield f'</{escape(tag)}>'
-            else:
+            elif tag.lower() in VOIDS:
                 yield f'/>'
+            else:
+                yield f'></{tag}>'
         elif item not in (True, False, None):
             yield escape(item)
