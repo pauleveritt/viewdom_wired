@@ -1,4 +1,6 @@
+import typing
 from dataclasses import fields, Field, MISSING
+from inspect import getmodule
 from typing import get_type_hints
 
 from viewdom import Context
@@ -80,7 +82,7 @@ def make_component(container: ServiceContainer, callable_, children=None, parent
         full_field: Field = fields_mapping[field_name]
         if full_field.metadata.get('injected', False):
             injected_info = full_field.metadata['injected']
-            injected_attr = injected_info.get('attr')
+            injected_pipeline = injected_info.get('pipeline')
             injected_type = injected_info['type_']
             injected_name = injected_info.get('name')
 
@@ -94,17 +96,23 @@ def make_component(container: ServiceContainer, callable_, children=None, parent
                 # Ask the registry for one of these
                 injected_target = container.get(injected_type)
 
-            # If attr is used, get specified attribute off that instance
-            if injected_attr:
-                field_value = getattr(injected_target, injected_attr)
+            if injected_pipeline:
+                result = injected_target
+                ip = iter(injected_pipeline)
+                while True:
+                    try:
+                        pipeline_step = next(ip)
+                        result = pipeline_step(result)
+                    except StopIteration:
+                        field_value = result
+                # attr = injected_pipeline[0]
+                # field_value = attr(injected_target)
             else:
                 field_value = injected_target
             args[field_name] = field_value
             continue
 
         # Is the field_type a generic from typing? For example, Tuple[str, ...]
-        import typing
-        from inspect import getmodule
         if getmodule(field_type) is typing:
             # We expect this case to have a default value
             args[field_name] = getattr(full_field, 'default', None)

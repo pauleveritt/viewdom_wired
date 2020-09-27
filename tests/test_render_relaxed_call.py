@@ -6,9 +6,11 @@ injector. Write some tests that cover policies.
 from dataclasses import dataclass
 
 from viewdom import html, VDOM
-from wired.dataclasses import injected, Context
+from wired.dataclasses import Context
+
 
 from viewdom_wired import register_component
+from viewdom_wired.field_types import injected, Attr
 from viewdom_wired.render import make_component
 
 
@@ -79,7 +81,7 @@ def test_injected_attr(registry):
 
     @dataclass
     class TestPerson:
-        name: str = injected(Context, attr='name')
+        name: str = injected(Context, Attr('name'))
 
         def __call__(self) -> VDOM:
             return html('<div>{self.name}</div>')
