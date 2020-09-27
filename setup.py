@@ -12,6 +12,7 @@ changes = readfile('CHANGES.rst')
 requires = [
     'viewdom',
     'wired',
+    'wired_injector',
     'venusian',
 ]
 
