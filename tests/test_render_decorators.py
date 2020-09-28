@@ -12,9 +12,15 @@ from dataclasses import dataclass
 import pytest
 from viewdom.h import html
 from wired import ServiceRegistry
-from wired.dataclasses import injected, Context, factory, register_dataclass
+from wired.dataclasses import factory, register_dataclass
+from wired_injector.operators import Attr, Context, Get
 
 from viewdom_wired import render, component
+
+try:
+    from typing import Annotated
+except ImportError:
+    from typing_extensions import Annotated
 
 
 class FirstContext:
@@ -37,8 +43,8 @@ class Settings:
 @dataclass
 class Heading:
     person: str
-    name: str = injected(Context, attr='name')
-    greeting: str = injected(Settings, attr='greeting')
+    name: Annotated[str, Context(), Attr('name')]
+    greeting: Annotated[str, Get(Settings), Attr('greeting')]
 
     def __call__(self):
         return html('''<h1>{self.greeting} {self.person}, {self.name}</h1>''')
@@ -61,8 +67,8 @@ def registry() -> ServiceRegistry:
 @dataclass
 class SecondHeading:
     person: str
-    name: str = injected(Context, attr='name')
-    greeting: str = injected(Settings, attr='greeting')
+    name: Annotated[str, Context(), Attr('name')]
+    greeting: Annotated[str, Get(Settings), Attr('greeting')]
 
     def __call__(self):
         return html('''<h1>{self.greeting} {self.person}... {self.name}</h1>''')

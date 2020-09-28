@@ -154,7 +154,8 @@ def relaxed_call(injector: Injector, callable_, children=None, parent_component=
     """ Make a component instance then call its __call__, returning a VDOM """
 
     target = injector.container.get(callable_)
-    component = injector(target, **kwargs)
+    system_props = dict(children=children, parent_component=parent_component)
+    component = injector(target, system_props=system_props, **kwargs)
     return component
 
 

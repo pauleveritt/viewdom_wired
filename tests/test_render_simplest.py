@@ -7,6 +7,10 @@ from wired import ServiceRegistry
 from viewdom_wired import register_component
 
 
+pytest_plugins = [
+    'viewdom_wired.fixtures',
+]
+
 @dataclass
 class Heading:
     name: str = 'Hello'

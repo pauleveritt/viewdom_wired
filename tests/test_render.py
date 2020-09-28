@@ -99,7 +99,7 @@ def test_wired_renderer_second(registry: ServiceRegistry):
 def test_wired_renderer_children(registry: ServiceRegistry):
     @dataclass
     class Heading2:
-        children: Sequence
+        children: str
         name: str = 'Hello'
 
         def __call__(self):
