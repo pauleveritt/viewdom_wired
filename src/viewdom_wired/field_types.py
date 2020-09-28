@@ -9,16 +9,6 @@ from typing import TypeVar, Any
 T = TypeVar('T')
 
 
-class Attr:
-    """ Take the incoming instance and pluck a value off of it """
-    attr: str
-
-    def __init__(self, attr: str):
-        self.attr = attr
-
-    def __call__(self, incoming: T) -> Any:
-        return getattr(incoming, self.attr)
-
 
 def injected(type_, *args, **kwargs) -> Field:
     """ Get a value from an injected type
