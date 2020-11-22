@@ -3,9 +3,7 @@ from typing import List
 
 from viewdom.h import html, VDOM
 from wired import ServiceRegistry
-
-from viewdom_wired import register_component
-
+from wired_injector.decorators import register_injectable
 
 pytest_plugins = [
     'viewdom_wired.fixtures',
@@ -44,7 +42,7 @@ def test_wired_renderer_simplest_nocontainer(registry: ServiceRegistry):
 def test_wired_renderer_simplest_container(registry: ServiceRegistry):
     from viewdom_wired import render
     container = registry.create_container()
-    register_component(registry, Heading)
+    register_injectable(registry, Heading)
     expected = '<h1>Hello</h1>'
     actual = render(html('''<{Heading}/>'''), container)
     assert expected == actual
@@ -53,7 +51,7 @@ def test_wired_renderer_simplest_container(registry: ServiceRegistry):
 def test_wired_renderer_simplest_propoverride(registry: ServiceRegistry):
     from viewdom_wired import render
     container = registry.create_container()
-    register_component(registry, Heading)
+    register_injectable(registry, Heading)
     expected = '<h1>Override</h1>'
     actual = render(html('''<{Heading} name="Override"/>'''), container)
     assert expected == actual
@@ -62,7 +60,7 @@ def test_wired_renderer_simplest_propoverride(registry: ServiceRegistry):
 def test_wired_renderer_simplest_init_false(registry: ServiceRegistry):
     from viewdom_wired import render
     container = registry.create_container()
-    register_component(registry, Person)
+    register_injectable(registry, Person)
     expected = '<div>Paul Everitt</div>'
     actual = render(html('''<{Person} first_name="Paul" last_name="Everitt"/>'''), container)
     assert expected == actual
@@ -75,7 +73,7 @@ def test_wired_renderer_non_void(registry: ServiceRegistry):
             return html('<i class="icon"></i>')
     from viewdom_wired import render
     container = registry.create_container()
-    register_component(registry, NonVoid)
+    register_injectable(registry, NonVoid)
     expected = '<i class="icon"></i>'
     actual = render(html('''<{NonVoid} />'''), container)
     assert expected == actual

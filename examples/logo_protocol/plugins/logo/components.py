@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 
 from viewdom import html
+from wired_injector import injectable
 
-from viewdom_wired import component
 from ...app import Logo
 
 
-@component(for_=Logo)
+@injectable(for_=Logo)
 @dataclass
 class NoAltLogo:
     src: str

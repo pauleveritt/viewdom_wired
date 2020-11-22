@@ -1,11 +1,10 @@
 from dataclasses import dataclass
 
 from viewdom import html
+from wired_injector import injectable
 
-from viewdom_wired import component
 
-
-@component()
+@injectable()
 @dataclass
 class Logo:
     src: str
@@ -15,7 +14,7 @@ class Logo:
         return html('<img src={self.src} />')
 
 
-@component()
+@injectable()
 @dataclass
 class Navbar:
     logo_src: str

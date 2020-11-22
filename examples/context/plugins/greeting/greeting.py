@@ -1,9 +1,8 @@
 from dataclasses import dataclass
 
 from viewdom import html
+from wired_injector import injectable
 from wired_injector.operators import Attr, Context
-
-from viewdom_wired import component
 
 try:
     from typing import Annotated
@@ -11,7 +10,7 @@ except ImportError:
     from typing_extensions import Annotated
 
 
-@component()
+@injectable()
 @dataclass
 class Greeting:
     name: Annotated[str, Context(), Attr('name')]

@@ -6,8 +6,9 @@ from dataclasses import dataclass
 
 from viewdom import html, VDOM
 from wired import ServiceRegistry
+from wired_injector.decorators import register_injectable
 
-from viewdom_wired import render, register_component
+from viewdom_wired import render
 
 
 @dataclass
@@ -24,7 +25,7 @@ def site_startup() -> ServiceRegistry:
     """ At startup, make a registry and register a component """
 
     registry = ServiceRegistry()
-    register_component(registry, Greeting)
+    register_injectable(registry, Greeting)
     return registry
 
 

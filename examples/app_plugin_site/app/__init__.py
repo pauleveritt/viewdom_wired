@@ -7,8 +7,7 @@ from dataclasses import dataclass, field
 from typing import Type
 
 from wired import ServiceRegistry
-
-from viewdom_wired import register_component
+from wired_injector.decorators import register_injectable
 
 
 @dataclass
@@ -17,4 +16,4 @@ class App:
 
     def setup(self, component: Type):
         """ Add a component to the registry """
-        register_component(self.registry, component)
+        register_injectable(self.registry, component)

@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
 from viewdom import html
+from wired_injector import injectable
 from wired_injector.operators import Attr, Get
 
 from examples.subcomponents.app import PunctuationCharacter
-from viewdom_wired import component
 
 try:
     from typing import Annotated
@@ -12,7 +12,7 @@ except ImportError:
     from typing_extensions import Annotated
 
 
-@component()
+@injectable()
 @dataclass
 class Punctuation:
     character: Annotated[

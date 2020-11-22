@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
 from viewdom import html
+from wired_injector import injectable
 from wired_injector.operators import Attr, Context
 
-from viewdom_wired import component
 from .contexts import FrenchCustomer
 from ..plugins.greeting import Greeting
 
@@ -17,7 +17,7 @@ except ImportError:
 # This replaces lookups for Greeting, but only
 # when the context is a FrenchCustomer
 
-@component(for_=Greeting, context=FrenchCustomer)
+@injectable(for_=Greeting, context=FrenchCustomer)
 @dataclass
 class FrenchGreeting:
     name: Annotated[str, Context(), Attr('name')]

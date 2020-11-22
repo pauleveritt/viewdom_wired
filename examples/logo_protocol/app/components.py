@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 
 from viewdom import html
+from wired_injector import injectable
 
-from viewdom_wired import component
 from .protocols import Logo, Navbar
 
 
-@component(for_=Logo)
+@injectable(for_=Logo)
 @dataclass
 class DefaultLogo:
     src: str
@@ -16,7 +16,7 @@ class DefaultLogo:
         return html('<img src={self.src} />')
 
 
-@component(for_=Navbar)
+@injectable(for_=Navbar)
 @dataclass
 class DefaultNavbar:
     logo_alt: str

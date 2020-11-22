@@ -1,5 +1,13 @@
 # TODO
 
+## Now
+
+## Next
+
+## Soon
+
+## Eventually
+
 - Allow DI to work on generics such as `Optional`, `Tuple`
 
 ## Refactor Samples
@@ -17,3 +25,9 @@
 - `@adherent` doesn't work with `@dataclass(frozen=True)` unless the class inherits from the protocol
 
 - Do some timing vs. jinja2
+
+## Done
+
+- Get rid of `@component` and `register_component` and instead use `injectable` 
+from `wired_injector`
+

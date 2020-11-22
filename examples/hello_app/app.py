@@ -6,13 +6,12 @@ and by sites. At the moment it is just the registry.
 """
 
 from wired import ServiceRegistry
-
-from viewdom_wired import register_component
+from wired_injector.decorators import register_injectable
 
 
 def make_app(component) -> ServiceRegistry:
     """ At startup, make a registry and register components """
 
     registry = ServiceRegistry()
-    register_component(registry, component)
+    register_injectable(registry, component)
     return registry

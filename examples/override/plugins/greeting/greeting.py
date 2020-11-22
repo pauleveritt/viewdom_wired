@@ -1,11 +1,10 @@
 from dataclasses import dataclass
 
 from viewdom import html
+from wired_injector import injectable
 
-from viewdom_wired import component
 
-
-@component()
+@injectable()
 @dataclass
 class Greeting:
     name: str = 'viewdom_wired'

@@ -5,8 +5,7 @@ from dataclasses import dataclass
 
 from viewdom import html, VDOM
 from wired import ServiceRegistry
-
-from viewdom_wired import register_component
+from wired_injector.decorators import register_injectable
 
 
 @dataclass
@@ -20,4 +19,4 @@ class Greeting:
 def wired_setup(registry: ServiceRegistry):
     # Do any startup-time setup, such as registering this
     # package's known components
-    register_component(registry, Greeting)
+    register_injectable(registry, Greeting)
