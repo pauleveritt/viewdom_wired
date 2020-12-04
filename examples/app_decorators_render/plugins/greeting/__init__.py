@@ -10,6 +10,7 @@ from ...app import App
 def wired_setup(app: App):
     app.scanner.scan(greeting)
 
+
 __all__ = [
     'Greeting',
     'wired_setup',

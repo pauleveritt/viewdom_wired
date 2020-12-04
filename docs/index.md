@@ -44,9 +44,6 @@ who
 what
 why
 pluggable
-usage
-interfaces
-protocols
-decorators
+examples/index
 future
 ```

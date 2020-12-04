@@ -8,7 +8,7 @@ from viewdom import html
 from viewdom_wired import render
 from ..app import App
 from ..plugins import greeting
-from ..plugins.greeting import Greeting  # noqa
+from ..plugins.greeting import Greeting
 
 
 def main() -> str:
@@ -16,5 +16,6 @@ def main() -> str:
     greeting.wired_setup(app.registry)
     container = app.registry.create_container()
     return render(html('<{Greeting}/>'), container)
+
 
 expected = '<h1>Hello viewdom_wired</h1>'

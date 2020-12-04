@@ -10,5 +10,4 @@ from ..plugins.greeting import Greeting
 
 
 def greeting_view() -> VDOM:
-    template = '<{Greeting}/>'
-    return html(template)
+    return html('<{Greeting}/>')

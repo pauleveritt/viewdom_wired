@@ -6,9 +6,10 @@ Would likely be Flask views or Sphinx context handlers.
 
 from viewdom import html
 
-from ..plugins.greeting import Greeting  # noqa
+from ..plugins.greeting import Greeting
 
 
 def greeting_view():
-    template = '<{Greeting}/>'
-    return html(template)
+    return html('''
+    <{Greeting}/>
+    ''')

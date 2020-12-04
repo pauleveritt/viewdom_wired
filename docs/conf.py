@@ -1,4 +1,5 @@
 project = 'viewdom_wired'
+html_title = 'viewdom_wired'
 copyright = '2020, Paul Everitt <pauleveritt@me.com>'
 author = 'Paul Everitt <pauleveritt@me.com>'
 release = '0.0.1'
@@ -8,8 +9,8 @@ extensions = [
 ]
 templates_path = ['_templates']
 html_theme = 'sphinx_book_theme'
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_static_path = ['_static']
-html_title = 'viewdom'
 html_theme_options = dict(
     extra_footer='Theme by the <a href="https://ebp.jupyterbook.org">'
                  + 'Executable Book Project</a>.',

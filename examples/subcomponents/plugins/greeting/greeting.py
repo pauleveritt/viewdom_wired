@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from viewdom import html
 from wired_injector import injectable
 
-from ..punctuation import Punctuation  # noqa
+from ..punctuation import Punctuation
 
 
 @injectable()

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from venusian import Scanner
 
-from . import components  # noqa
+from . import components
 from ...context.app import App as BaseApp
 
 
