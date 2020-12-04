@@ -10,7 +10,11 @@ readme = readfile('README.rst')
 changes = readfile('CHANGES.rst')
 
 requires = [
+    'tagged',
+    'htm',
     'viewdom',
+    'MarkupSafe',
+    'typing_extensions>=3.7.4;python_version<"3.8"',
     'wired',
     'wired_injector',
     'venusian',
@@ -18,14 +22,25 @@ requires = [
 
 docs_require = [
     'Sphinx',
+    'sphinx-book-theme',
+    'myst-parser',
 ]
 
 tests_require = [
     'pytest',
-    'mypy',
-    'pytest-mypy',
-    'ipython',
 ]
+
+dev_require = [
+    'mypy',
+    'coverage',
+    'tox',
+    'black',
+    'flake8',
+    'twine',
+    'pre-commit',
+    'check-manifest',
+]
+
 
 setup(
     name='viewdom_wired',
@@ -44,7 +59,11 @@ setup(
     include_package_data=True,
     python_requires='>=3.6',
     install_requires=requires,
-    extras_require={'docs': docs_require, 'tests': tests_require},
+    extras_require=dict(
+        docs=docs_require,
+        tests=tests_require,
+        dev=dev_require,
+    ),
     zip_safe=False,
     keywords=','.join(
         [
