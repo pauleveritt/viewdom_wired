@@ -35,3 +35,5 @@ def main() -> str:
     registry = site_startup()
     container = registry.create_container()
     return render(html('<{Greeting}><span>Children</span><//>'), container)
+
+expected = '<h1>Hello viewdom_wired</h1><span>Children</span>'

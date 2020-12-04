@@ -15,3 +15,6 @@ def main() -> str:
 
     vdom = greeting_view()
     return app.render(vdom)
+
+
+expected = '<nav><img src="logo.png"/></nav>'

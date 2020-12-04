@@ -6,8 +6,8 @@ from typing import Dict
 from . import components
 from .contexts import Customer, FrenchCustomer
 from .views import greeting_view
-from ...context.app import App
 from ..plugins import greeting
+from ...context.app import App
 
 
 def site_startup() -> App:
@@ -39,3 +39,9 @@ def main() -> Dict[str, str]:
         regular_result=regular_result,
         french_result=french_result
     )
+
+
+expected = dict(
+    regular_result='<h1>Hello Mary</h1>',
+    french_result='<h1>Bonjour Marie</h1>'
+)

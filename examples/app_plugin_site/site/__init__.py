@@ -16,3 +16,5 @@ def main() -> str:
     greeting.wired_setup(app.registry)
     container = app.registry.create_container()
     return render(html('<{Greeting}/>'), container)
+
+expected = '<h1>Hello viewdom_wired</h1>'

@@ -16,3 +16,6 @@ def main() -> str:
     registry = make_app(Greeting)
     container = registry.create_container()
     return render(html('<{Greeting}/>'), container)
+
+
+expected = '<h1>Hello viewdom_wired</h1>'

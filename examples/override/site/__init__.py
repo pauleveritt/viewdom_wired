@@ -24,3 +24,6 @@ def main() -> str:
     app = site_startup()
     vdom = greeting_view()
     return app.render(vdom)
+
+
+expected = '<h1>Hello My Site</h1>'

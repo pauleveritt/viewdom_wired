@@ -22,3 +22,6 @@ def main() -> str:
     regular_customer = Customer(name='Mary')
     regular_vdom = greeting_view()
     return app.render(regular_vdom, context=regular_customer)
+
+
+expected = '<h1>Hello Mary</h1>'

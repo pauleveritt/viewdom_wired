@@ -1,4 +1,6 @@
-"""
-Add a subcomponent which uses the injector to get a config value.
-"""
+from .site import main, expected
 
+
+def test():
+    actual = main()
+    return expected, actual
