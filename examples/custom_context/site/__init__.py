@@ -35,13 +35,10 @@ def main() -> Dict[str, str]:
     french_vdom = greeting_view()
     french_result = app.render(french_vdom, context=french_customer)
 
-    return dict(
-        regular_result=regular_result,
-        french_result=french_result
-    )
+    return dict(regular_result=regular_result, french_result=french_result)
 
 
 expected = dict(
     regular_result='<h1>Hello Mary</h1>',
-    french_result='<h1>Bonjour Marie</h1>'
+    french_result='<h1>Bonjour Marie</h1>',
 )

@@ -24,6 +24,7 @@ from viewdom_wired import render
 @dataclass
 class Greeting:
     """ A simple component, passed one argument """
+
     name: str = 'viewdom_wired'
 
     def __call__(self) -> VDOM:

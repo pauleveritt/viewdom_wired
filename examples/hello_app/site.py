@@ -6,8 +6,10 @@ known components.
 from viewdom import html
 
 from viewdom_wired import render
+
 # Get the pluggable app
 from ..hello_app.app import make_app
+
 # This site installed a plugin
 from ..hello_app.plugin import Greeting
 

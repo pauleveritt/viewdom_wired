@@ -15,10 +15,8 @@ from viewdom_wired.fixtures import Customer
 
 try:
     from typing import Annotated
-    from typing import get_type_hints
 except ImportError:
-    # Need the updated get_type_hints which allows include_extras=True
-    from typing_extensions import Annotated, get_type_hints
+    from typing_extensions import Annotated
 
 pytest_plugins = [
     'viewdom_wired.fixtures',
@@ -27,6 +25,7 @@ pytest_plugins = [
 
 class Person:
     """ A marker class """
+
     pass
 
 
@@ -79,7 +78,9 @@ def test_context(registry, injector):
         def __call__(self) -> VDOM:
             return html('<div>{self.customer.name}</div>')
 
-    register_injectable(registry, for_=Person, target=TestPerson, context=Customer)
+    register_injectable(
+        registry, for_=Person, target=TestPerson, context=Customer
+    )
     person = injector(TestPerson)
     assert 'Some Customer' == person.customer.name
 

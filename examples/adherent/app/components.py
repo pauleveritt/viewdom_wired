@@ -26,4 +26,6 @@ class DefaultNavbar:
     logo_src: str
 
     def __call__(self):
-        return html('<nav><{Logo} alt={self.logo_alt} src={self.logo_src} /></nav>')
+        return html(
+            '<nav><{Logo} alt={self.logo_alt} src={self.logo_src} /></nav>'
+        )

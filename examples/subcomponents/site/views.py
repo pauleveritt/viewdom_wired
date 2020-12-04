@@ -10,6 +10,8 @@ from ..plugins.greeting import Greeting
 
 
 def greeting_view():
-    return html('''
+    return html(
+        '''
     <{Greeting}/>
-    ''')
+    '''
+    )

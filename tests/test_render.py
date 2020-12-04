@@ -81,7 +81,11 @@ class SecondHeading:
     ]
 
     def __call__(self):
-        return html('''<h1>{self.greeting} {self.person}... {self.name}</h1>''')
+        return html(
+            '''
+        <h1>{self.greeting} {self.person}... {self.name}</h1>
+        '''
+        )
 
 
 def test_wired_renderer_first(registry: ServiceRegistry):
@@ -123,8 +127,8 @@ def test_wired_renderer_generics(registry: ServiceRegistry):
         names: Tuple[str, ...] = ('Name 1',)
 
         def __call__(self):
-            name_one = self.names[0]
-            return html('''<h1>{name_one}</h1>''')
+            name_one = self.names[0]  # noqa: F841
+            return html('<h1>{name_one}</h1>')
 
     container = registry.create_container()
     register_injectable(registry, LocalHeading, LocalHeading)

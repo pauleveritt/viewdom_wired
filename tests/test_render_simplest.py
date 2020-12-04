@@ -9,6 +9,7 @@ pytest_plugins = [
     'viewdom_wired.fixtures',
 ]
 
+
 @dataclass
 class Heading:
     name: str = 'Hello'
@@ -27,12 +28,13 @@ class Person:
         self.full_name = [self.first_name, self.last_name]
 
     def __call__(self):
-        full_name = ' '.join(self.full_name)
+        full_name = ' '.join(self.full_name)  # noqa: F841
         return html('<div>{full_name}</div>')
 
 
 def test_wired_renderer_simplest_nocontainer(registry: ServiceRegistry):
     from viewdom.h import render
+
     instance = Heading(name='No Wired')
     expected = '<h1>No Wired</h1>'
     actual = render(instance())
@@ -41,6 +43,7 @@ def test_wired_renderer_simplest_nocontainer(registry: ServiceRegistry):
 
 def test_wired_renderer_simplest_container(registry: ServiceRegistry):
     from viewdom_wired import render
+
     container = registry.create_container()
     register_injectable(registry, Heading)
     expected = '<h1>Hello</h1>'
@@ -50,6 +53,7 @@ def test_wired_renderer_simplest_container(registry: ServiceRegistry):
 
 def test_wired_renderer_simplest_propoverride(registry: ServiceRegistry):
     from viewdom_wired import render
+
     container = registry.create_container()
     register_injectable(registry, Heading)
     expected = '<h1>Override</h1>'
@@ -59,10 +63,18 @@ def test_wired_renderer_simplest_propoverride(registry: ServiceRegistry):
 
 def test_wired_renderer_simplest_init_false(registry: ServiceRegistry):
     from viewdom_wired import render
+
     container = registry.create_container()
     register_injectable(registry, Person)
     expected = '<div>Paul Everitt</div>'
-    actual = render(html('''<{Person} first_name="Paul" last_name="Everitt"/>'''), container)
+    actual = render(
+        html(
+            '''
+    <{Person} first_name="Paul" last_name="Everitt"/>
+    '''
+        ),
+        container,
+    )
     assert expected == actual
 
 
@@ -71,7 +83,9 @@ def test_wired_renderer_non_void(registry: ServiceRegistry):
     class NonVoid:
         def __call__(self):
             return html('<i class="icon"></i>')
+
     from viewdom_wired import render
+
     container = registry.create_container()
     register_injectable(registry, NonVoid)
     expected = '<i class="icon"></i>'

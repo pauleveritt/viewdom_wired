@@ -4,14 +4,13 @@ Dataclass field helpers.
 """
 
 from dataclasses import field, Field
-from typing import TypeVar, Any
+from typing import TypeVar
 
 T = TypeVar('T')
 
 
-
 def injected(type_, *args, **kwargs) -> Field:
-    """ Get a value from an injected type
+    """Get a value from an injected type
 
     We frequently want part of an injectable or adapter. Just an attribute
     or, for injectable/adapters that are dict-like, a key.
@@ -31,7 +30,7 @@ def injected(type_, *args, **kwargs) -> Field:
      We could just manually do ``injected`` then pick apart the injected
      value. But that exposes a big surface area. This field type lets us
      zero in on what we want.
-     """
+    """
 
     # If metadata was also passed in, preserve it, otherwise start clean
     if 'metadata' not in kwargs:

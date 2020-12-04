@@ -18,12 +18,10 @@ class PunctuationCharacter:
 
 @dataclass
 class App(BaseApp):
-
     def __post_init__(self):
         self.scanner = Scanner(registry=self.registry)
 
         # Register a singleton for the punctuation character
         self.registry.register_singleton(
-            PunctuationCharacter(),
-            PunctuationCharacter
+            PunctuationCharacter(), PunctuationCharacter
         )

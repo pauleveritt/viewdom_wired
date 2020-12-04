@@ -11,7 +11,8 @@ class Logo(Protocol):
     src: str
     alt: str
 
-    def __call__(self) -> VDOM: ...
+    def __call__(self) -> VDOM:
+        ...
 
 
 @dataclass

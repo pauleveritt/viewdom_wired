@@ -11,7 +11,4 @@ def wired_setup(app: App):
     app.scanner.scan(greeting)
 
 
-__all__ = [
-    'Greeting',
-    'wired_setup'
-]
+__all__ = ['Greeting', 'wired_setup']

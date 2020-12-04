@@ -14,6 +14,7 @@ from viewdom_wired import render
 @dataclass
 class Greeting:
     """ A simple component, passed one argument """
+
     name: str = 'viewdom_wired'
     children: VDOM = html('<span>Default</span>')
 

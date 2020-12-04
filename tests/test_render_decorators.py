@@ -72,7 +72,11 @@ class SecondHeading:
     greeting: Annotated[str, Get(Settings), Attr('greeting')]
 
     def __call__(self):
-        return html('''<h1>{self.greeting} {self.person}... {self.name}</h1>''')
+        return html(
+            '''
+        <h1>{self.greeting} {self.person}... {self.name}</h1>
+        '''
+        )
 
 
 def test_wired_renderer_first(registry: ServiceRegistry):

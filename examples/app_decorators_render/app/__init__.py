@@ -16,6 +16,7 @@ from viewdom_wired import render
 @dataclass
 class App:
     """ A pluggable app with a registry and a decorator scanner """
+
     registry: ServiceRegistry = field(default_factory=ServiceRegistry)
     scanner: Scanner = field(init=False)
 

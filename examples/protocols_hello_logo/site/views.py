@@ -6,6 +6,8 @@ LOGO_SRC = 'logo.png'
 
 
 def greeting_view():
-    return html('''
+    return html(
+        '''
     <{Navbar} logo_src={LOGO_SRC} />
-    ''')
+    '''
+    )

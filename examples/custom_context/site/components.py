@@ -17,6 +17,7 @@ except ImportError:
 # This replaces lookups for Greeting, but only
 # when the context is a FrenchCustomer
 
+
 @injectable(for_=Greeting, context=FrenchCustomer)
 @dataclass
 class FrenchGreeting:

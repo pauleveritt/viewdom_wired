@@ -11,7 +11,4 @@ def wired_setup(app: App):
     app.scanner.scan(punctuation)
 
 
-__all__ = [
-    'Punctuation',
-    'wired_setup'
-]
+__all__ = ['Punctuation', 'wired_setup']

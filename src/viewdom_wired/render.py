@@ -4,7 +4,13 @@ from wired import ServiceContainer
 from wired_injector.injector import Injector
 
 
-def relaxed_call(injector: Injector, callable_, children=None, parent_component=None, **kwargs):
+def relaxed_call(
+    injector: Injector,
+    callable_,
+    children=None,
+    parent_component=None,
+    **kwargs,
+):
     """ Make a component instance then call its __call__, returning a VDOM """
 
     target = injector.container.get(callable_)
@@ -15,10 +21,19 @@ def relaxed_call(injector: Injector, callable_, children=None, parent_component=
 
 def render(value, container: ServiceContainer, **kwargs):
     injector = Injector(container)
-    return "".join(render_gen(Context(value, **kwargs), injector=injector, children=None, parent_component=None))
+    return "".join(
+        render_gen(
+            Context(value, **kwargs),
+            injector=injector,
+            children=None,
+            parent_component=None,
+        )
+    )
 
 
-def render_gen(value, injector: Injector, children=None, parent_component=None):
+def render_gen(
+    value, injector: Injector, children=None, parent_component=None
+):
     for item in flatten(value):
         if isinstance(item, VDOMNode):
             tag, props, children = item.tag, item.props, item.children
@@ -28,27 +43,27 @@ def render_gen(value, injector: Injector, children=None, parent_component=None):
                     tag,
                     children=children,
                     parent_component=parent_component,
-                    **props
+                    **props,
                 )
                 parent_component = component
                 yield from render_gen(
-                    component(),
-                    injector,
-                    children,
-                    parent_component
+                    component(), injector, children, parent_component
                 )
                 continue
 
             yield f"<{escape(tag)}"
             if props:
-                yield f" {' '.join(encode_prop(k, v) for (k, v) in props.items())}"
+                pi = props.items()
+                yield f" {' '.join(encode_prop(k, v) for (k, v) in pi)}"
 
             if children:
                 yield ">"
-                yield from render_gen(children, injector, parent_component=parent_component)
+                yield from render_gen(
+                    children, injector, parent_component=parent_component
+                )
                 yield f'</{escape(tag)}>'
             elif tag.lower() in VOIDS:
-                yield f'/>'
+                yield '/>'
             else:
                 yield f'></{tag}>'
         elif item not in (True, False, None):
