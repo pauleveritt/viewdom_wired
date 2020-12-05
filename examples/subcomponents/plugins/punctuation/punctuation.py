@@ -9,7 +9,7 @@ from examples.subcomponents.app import PunctuationCharacter
 try:
     from typing import Annotated
 except ImportError:
-    from typing_extensions import Annotated
+    from typing_extensions import Annotated  # type: ignore
 
 
 @injectable()

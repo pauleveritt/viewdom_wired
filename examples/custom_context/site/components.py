@@ -10,7 +10,7 @@ from ..plugins.greeting import Greeting
 try:
     from typing import Annotated
 except ImportError:
-    from typing_extensions import Annotated
+    from typing_extensions import Annotated  # type: ignore
 
 
 # Customizability:

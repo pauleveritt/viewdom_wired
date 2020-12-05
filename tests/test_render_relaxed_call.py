@@ -16,7 +16,7 @@ from viewdom_wired.fixtures import Customer
 try:
     from typing import Annotated
 except ImportError:
-    from typing_extensions import Annotated
+    from typing_extensions import Annotated  # type: ignore
 
 pytest_plugins = [
     'viewdom_wired.fixtures',

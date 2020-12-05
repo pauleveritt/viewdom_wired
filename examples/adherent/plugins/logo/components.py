@@ -11,6 +11,7 @@ from ...app.decorators import adherent
 @adherent(Logo)
 @dataclass
 class NoAltLogo:
+    alt: str
     src: str
 
     def __call__(self) -> VDOM:
