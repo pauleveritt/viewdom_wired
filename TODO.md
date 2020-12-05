@@ -6,6 +6,9 @@
 
 ## Soon
 
+- Put API into Sphinx docs
+  * Improve docstrings and use Napoleon
+
 ## Eventually
 
 - Allow DI to work on generics such as `Optional`, `Tuple`

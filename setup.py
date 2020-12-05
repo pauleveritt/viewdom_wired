@@ -33,6 +33,7 @@ tests_require = [
 dev_require = [
     'mypy',
     'coverage',
+    'pytest-coverage',
     'tox',
     'black',
     'flake8',
