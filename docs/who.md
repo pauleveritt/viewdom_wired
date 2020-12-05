@@ -19,5 +19,3 @@ Too often, Python system optimize for the goal of "Super Easy First Five Minutes
 Alas, this tends to lead to a miserable next five years, when the magic breaks down.
 
 If you're willing to trade a bit of first-contact convenience for something that scales, then "pluggable apps" might be a good fit for you.
-
-

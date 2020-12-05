@@ -20,7 +20,7 @@
 
 - Convert `@component(for_=Protocol)` to remove `for_`
 
-  - Or, have a viewdom_wired.protocol_component decorator 
+  - Or, have a viewdom_wired.protocol_component decorator
 
 - `@adherent` doesn't work with `@dataclass(frozen=True)` unless the class inherits from the protocol
 
@@ -28,6 +28,5 @@
 
 ## Done
 
-- Get rid of `@component` and `register_component` and instead use `injectable` 
+- Get rid of `@component` and `register_component` and instead use `injectable`
 from `wired_injector`
-

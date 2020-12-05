@@ -136,4 +136,3 @@ With something like this, you would get what's currently considered best practic
 - Client-side rendering (CSR) via rehydration for subsequent updates after the first load
 
 A proof-of-concept was done for this with `htm.py`.
-
