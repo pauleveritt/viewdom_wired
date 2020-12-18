@@ -3,13 +3,11 @@ from typing import Tuple
 
 import pytest
 from viewdom.h import html
-from wired import ServiceRegistry
 from wired.dataclasses import factory, register_dataclass
-from wired_injector import injectable
-from wired_injector.decorators import register_injectable
+from wired_injector import injectable, InjectorRegistry
 from wired_injector.operators import Context, Attr, Get
 
-from viewdom_wired import render
+from viewdom_wired import render, component
 
 try:
     from typing import Annotated
@@ -33,7 +31,7 @@ class Settings:
     greeting: str = 'Hello'
 
 
-@injectable()
+@component()
 @dataclass
 class Heading:
     person: str
@@ -49,23 +47,18 @@ class Heading:
     ]
 
     def __call__(self):
-        return html('''<h1>{self.greeting} {self.person}, {self.name}</h1>''')
+        return html('<h1>{self.greeting} {self.person}, {self.name}</h1>')
 
 
 @pytest.fixture
-def registry() -> ServiceRegistry:
-    import sys
-    from venusian import Scanner
-
-    registry = ServiceRegistry()
-    scanner = Scanner(registry=registry)
-    current_module = sys.modules[__name__]
-    scanner.scan(current_module)
+def registry() -> InjectorRegistry:
+    registry = InjectorRegistry()
+    registry.scan()
     register_dataclass(registry, Settings)
     return registry
 
 
-@injectable(for_=Heading, context=SecondContext)
+@injectable(for_=Heading, context=SecondContext, use_props=True)
 @dataclass
 class SecondHeading:
     person: str
@@ -79,8 +72,10 @@ class SecondHeading:
         Get(Settings),
         Attr('greeting'),
     ]
+    flag: int = 99
 
     def __call__(self):
+        x = 1
         return html(
             '''
         <h1>{self.greeting} {self.person}... {self.name}</h1>
@@ -88,38 +83,38 @@ class SecondHeading:
         )
 
 
-def test_wired_renderer_first(registry: ServiceRegistry):
-    container = registry.create_container(context=FirstContext())
+def test_wired_renderer_first(registry: InjectorRegistry):
+    container = registry.create_injectable_container(context=FirstContext())
     expected = '<h1>Hello World, First Context</h1>'
-    actual = render(html('''<{Heading} person="World"/>'''), container)
+    actual = render(html('<{Heading} person="World"/>'), container)
     assert expected == actual
 
 
-def test_wired_renderer_second(registry: ServiceRegistry):
-    container = registry.create_container(context=SecondContext())
+def test_wired_renderer_second(registry: InjectorRegistry):
+    container = registry.create_injectable_container(context=SecondContext())
     expected = '<h1>Hello World... Second Context</h1>'
-    actual = render(html('''<{Heading} person="World"/>'''), container)
+    actual = render(html('<{Heading} person="World"/>'), container)
     assert expected == actual
 
 
-def test_wired_renderer_children(registry: ServiceRegistry):
+def test_wired_renderer_children(registry: InjectorRegistry):
     @dataclass
     class Heading2:
         children: str
         name: str = 'Hello'
 
         def __call__(self):
-            return html('''<h1>{self.name}</h1><div>{self.children}</div>''')
+            return html('<h1>{self.name}</h1><div>{self.children}</div>')
 
-    registry = ServiceRegistry()
-    register_injectable(registry, Heading, Heading2)
-    container = registry.create_container()
+    registry = InjectorRegistry()
+    registry.register_injectable(Heading, Heading2, use_props=True)
+    container = registry.create_injectable_container()
     expected = '<h1>Hello</h1><div>Child</div>'
-    actual = render(html('''<{Heading}>Child<//>'''), container)
+    actual = render(html('<{Heading}>Child</>'), container=container)
     assert expected == actual
 
 
-def test_wired_renderer_generics(registry: ServiceRegistry):
+def test_wired_renderer_generics(registry: InjectorRegistry):
     """ Tolerate usage of PEP 484 generics on type hints """
 
     @dataclass
@@ -130,8 +125,8 @@ def test_wired_renderer_generics(registry: ServiceRegistry):
             name_one = self.names[0]  # noqa: F841
             return html('<h1>{name_one}</h1>')
 
-    container = registry.create_container()
-    register_injectable(registry, LocalHeading, LocalHeading)
+    container = registry.create_injectable_container()
+    registry.register_injectable(LocalHeading, LocalHeading, use_props=True)
     expected = '<h1>Name 1</h1>'
-    actual = render(html('''<{LocalHeading}/>'''), container)
+    actual = render(html('<{LocalHeading}/>'), container)
     assert expected == actual

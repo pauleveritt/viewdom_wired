@@ -1,30 +1,35 @@
 from viewdom import Context
 from viewdom.h import flatten, escape, encode_prop, VDOMNode, VOIDS
-from wired import ServiceContainer
-from wired_injector.injector import Injector
+from wired_injector.registry import InjectorContainer
 
 
 def relaxed_call(
-    injector: Injector,
-    callable_,
-    children=None,
-    parent_component=None,
-    **kwargs,
+        container: InjectorContainer,
+        callable_,
+        children=None,
+        parent_component=None,
+        **kwargs,
 ):
     """ Make a component instance then call its __call__, returning a VDOM """
 
-    target = injector.container.get(callable_)
+    # In the component rendering, the context is always the
+    # container's context.
+    context = container.context
     system_props = dict(children=children, parent_component=parent_component)
-    component = injector(target, system_props=system_props, **kwargs)
+    component = container.inject(
+        callable_,
+        context=context,
+        system_props=system_props,
+        **kwargs
+    )
     return component
 
 
-def render(value, container: ServiceContainer, **kwargs):
-    injector = Injector(container)
+def render(value, container: InjectorContainer, **kwargs):
     return "".join(
         render_gen(
             Context(value, **kwargs),
-            injector=injector,
+            container=container,
             children=None,
             parent_component=None,
         )
@@ -32,14 +37,17 @@ def render(value, container: ServiceContainer, **kwargs):
 
 
 def render_gen(
-    value, injector: Injector, children=None, parent_component=None
+        value,
+        container: InjectorContainer,
+        children=None,
+        parent_component=None
 ):
     for item in flatten(value):
         if isinstance(item, VDOMNode):
             tag, props, children = item.tag, item.props, item.children
             if callable(tag):
                 component = relaxed_call(
-                    injector,
+                    container,
                     tag,
                     children=children,
                     parent_component=parent_component,
@@ -47,7 +55,7 @@ def render_gen(
                 )
                 parent_component = component
                 yield from render_gen(
-                    component(), injector, children, parent_component
+                    component(), container, children, parent_component
                 )
                 continue
 
@@ -59,7 +67,7 @@ def render_gen(
             if children:
                 yield ">"
                 yield from render_gen(
-                    children, injector, parent_component=parent_component
+                    children, container, parent_component=parent_component
                 )
                 yield f'</{escape(tag)}>'
             elif tag.lower() in VOIDS:
