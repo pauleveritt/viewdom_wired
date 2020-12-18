@@ -58,7 +58,7 @@ def registry() -> InjectorRegistry:
     return registry
 
 
-@injectable(for_=Heading, context=SecondContext, use_props=True)
+@component(for_=Heading, context=SecondContext)
 @dataclass
 class SecondHeading:
     person: str
