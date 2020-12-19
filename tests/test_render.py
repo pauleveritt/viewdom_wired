@@ -4,7 +4,7 @@ from typing import Tuple
 import pytest
 from viewdom.h import html
 from wired.dataclasses import factory, register_dataclass
-from wired_injector import injectable, InjectorRegistry
+from wired_injector import InjectorRegistry
 from wired_injector.operators import Context, Attr, Get
 
 from viewdom_wired import render, component

@@ -12,7 +12,7 @@ def main():
 
     # Per "request"
     container = registry.create_injectable_container()
-    first_name = "Prop"
+    first_name = "Prop"  # noqa: F841
     result = render(html('<{Greeting} first_name={first_name} />'), container)
 
     expected = '<h1>Hello Prop</h1>'

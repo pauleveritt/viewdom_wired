@@ -11,5 +11,7 @@ ignore =
     W504
     # F821: undefined name
     F821
+    # F401: imported but unused, components in templates
+    F401
 
 show-source = True

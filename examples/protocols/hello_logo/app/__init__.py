@@ -1,7 +1,7 @@
 from viewdom import html
-from viewdom_wired import render
 from wired_injector import InjectorRegistry
 
+from viewdom_wired import render
 from .components import Navbar
 from .. import site
 
@@ -16,7 +16,7 @@ def main():
 
     # Per "request"
     container = registry.create_injectable_container()
-    LOGO_SRC = 'logo.png'
+    LOGO_SRC = 'logo.png'  # noqa: F841
     result = render(html('<{Navbar} logo_src={LOGO_SRC} />'), container)
 
     expected = '<nav><img src="logo.png"/></nav>'
