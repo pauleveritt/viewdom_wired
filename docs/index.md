@@ -27,23 +27,16 @@ For Python 3.6, you'll need the `dataclasses` backport.
 
 ## Minimum Example
 
-Register a component that will be used only in a certain circumstance:
-
-```{literalinclude} ../examples/custom_context/site/components.py
----
-start-after: Customizability
----
-```
 
 
 ```{toctree}
 ---
 hidden: true
 ---
+pluggable
+protocols
 who
 what
 why
-pluggable
-examples/index
 future
 ```

@@ -10,16 +10,7 @@ In this document we'll gradually write a pluggable ecosystem which has 3 actors:
 - A *plugin*, which is written for that pluggable app, and might add *or replace* some of the app's services
 - A *site* which installs the pluggable app, some plugins, and might add/replace/override some components
 
-## To Explain
-- Brief statement
-- Scenario
-- Extending (the most common thing)
-- Registering
-- Replacing/customizing
-- Caller/Callee conundrum
-- Huge surface areas: learning, forking
-
-# Pluggable Site
+## Pluggable Site
 
 Let's write a basic application using the pluggability ideas in `viewdom_wired`.
 We'll start with something very basic and gradually introduce some of the basic ideas.
@@ -75,7 +66,7 @@ Why bring this up?
 Because it's part of what `viewdom_wired` adds beyond just `viewdom`: a concept of "props" that can be part of the injectable information.
 Other injector systems don't have that, and it's (obviously) critical for `viewdom_wired` and components.
 
-## hello_app
+## All Three Roles
 
 Of course that's not very real-world.
 Let's show a case that splits the three roles: pluggable app, a plugin, and a site that uses both along with local customizations.
@@ -107,14 +98,14 @@ It also tells the pluggable app what plugins it is using:
 One thing that is nice about this: we didn't use subclassing to establish the is-a relationship between `Greeting` and `SiteGreeting`.
 Instead, the registration handled this with the `for_` decorator argument.
 
-## context
+## Container Context
 
 Components don't have to get all their info from passed-in props.
 They can ask the injector to get information for them, for example, from the `wired` container's context.
 
 The app changes, as we want our container created with a `Customer` as context:
 
-```{literalinclude} ../examples/pluggable/context/app/__init__.py
+```{literalinclude} ../examples/pluggable/context/app.py
 ---
 ---
 ```
@@ -141,7 +132,7 @@ The site defines different kinds of contexts:
 
 Of course in a bigger system with a factory, the pluggable app might handle creating the context, e.g. by looking at the incoming URL.
 
-## custom_context
+## Per-Request Context
 
 Another benefit: different flavors of component based on the "context".
 The app can render using a container that has a context value.

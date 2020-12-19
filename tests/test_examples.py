@@ -10,7 +10,7 @@ from examples.pluggable import (
 )
 
 from examples.protocols import (
-    protocols_hello_logo,
+    hello_logo,
     logo_protocol,
     adherent,
 )
@@ -25,7 +25,7 @@ from examples.protocols import (
         context,
         custom_context,
         subcomponents,
-        protocols_hello_logo,
+        hello_logo,
         logo_protocol,
         adherent,
     ],

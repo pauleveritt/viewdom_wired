@@ -18,7 +18,7 @@ def main():
     container = registry.create_injectable_container(
         context=customer,
     )
-    result = render(html('<{Greeting}><span>Children</span><//>'), container)
+    result = render(html('<{Greeting}/>'), container)
 
     expected = '<h1>Hello Mary</h1>'
     return expected, result

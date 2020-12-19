@@ -30,7 +30,9 @@ html_sidebars = {
         'sbt-sidebar-nav.html',
     ]
 }
-myst_admonition_enable = True
+myst_enable_extensions = [
+    'colon_fence',
+]
 myst_url_schemes=['http', 'https', 'mailto']
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3.7', None),

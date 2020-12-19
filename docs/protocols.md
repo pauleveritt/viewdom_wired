@@ -11,38 +11,34 @@ Fortunately, `wired` can use protocols in the `for_` to register implementations
 
 Let's write an application showing the use of protocols in a component system.
 
-## hello_logo
+## Logo Without Protocols
 
 We have a pluggable app that ships with its own components: a `Navbar` which has a `Logo` subcomponent.
 The app changes slightly to scan the `components.py` module for registrations:
 
-```{literalinclude} ../../examples/protocols_hello_logo/app/app.py
+```{literalinclude} ../examples/protocols/hello_logo/app/__init__.py
 ---
-start-after: from venusian
 ---
 ```
 
 The two built-in components:
 
-```{literalinclude} ../../examples/protocols_hello_logo/app/components.py
+```{literalinclude} ../examples/protocols/hello_logo/app/components.py
 ---
-start-after: from wired_injector
 ---
 ```
 
 The site is using a plugin which replaces the built-in logo with one that allows an `alt` value:
 
-```{literalinclude} ../../examples/protocols_hello_logo/plugins/logo/components.py
+```{literalinclude} ../examples/protocols/hello_logo/plugins/logo.py
 ---
-start-after: from wired_injector
 ---
 ```
 
 The site has a view with a template which renders a `Navbar`:
 
-```{literalinclude} ../../examples/protocols_hello_logo/site/views.py
+```{literalinclude} ../examples/protocols/hello_logo/site/__init__.py
 ---
-start-after: from viewdom
 ---
 ```
 
@@ -62,9 +58,8 @@ First, let's break the concept from the implementation: `Logo` will be a PEP 544
 
 The pluggable app will define the `Logo` protocol then provide a `DefaultLogo` implementation of that protocol:
 
-```{literalinclude} ../../examples/logo_protocol/plugins/logo/components.py
+```{literalinclude} ../examples/protocols/logo_protocol/plugins/logo.py
 ---
-start-after: from wired_injector
 ---
 ```
 
@@ -87,7 +82,7 @@ logo: Logo = NoAltLogo(src='alt.png')
 In the `mypy` tracker, Glyph `pointed to a decorator <https://github.com/python/mypy/issues/4717#issuecomment-454609539>`_ which could say "the following class implements a certain protocol."
 Let's use it.
 
-```{literalinclude} ../../examples/adherent/app/decorators.py
+```{literalinclude} ../examples/protocols/adherent/app/decorators.py
 ---
 start-at: protocol =
 ---
@@ -95,17 +90,15 @@ start-at: protocol =
 
 The built-in `DefaultLogo` needs to say it adheres to the `Logo` protocol:
 
-```{literalinclude} ../../examples/adherent/app/components.py
+```{literalinclude} ../examples/protocols/adherent/app/components.py
 ---
-start-at: injectable(for_=Logo)
 ---
 ```
 
 The plugin's component needs to adhere as well:
 
-```{literalinclude} ../../examples/adherent/plugins/logo/components.py
+```{literalinclude} ../examples/protocols/adherent/plugins/logo.py
 ---
-start-at: injectable(for_=Logo)
 ---
 ```
 
