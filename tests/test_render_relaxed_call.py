@@ -1,14 +1,12 @@
 """
 The component renderer uses a variation of wired's dataclass dependency
-injector. Write some tests that cover policies.
+injector via use_props. Write some tests that cover policies.
 
 """
 from dataclasses import dataclass
 
 import pytest
-from viewdom import html, VDOM
-from wired_injector.decorators import register_injectable
-from wired_injector.injector import Injector
+from wired_injector import InjectorRegistry
 from wired_injector.operators import Context, Attr
 
 from viewdom_wired.fixtures import Customer
@@ -18,87 +16,83 @@ try:
 except ImportError:
     from typing_extensions import Annotated  # type: ignore
 
-pytest_plugins = [
-    'viewdom_wired.fixtures',
-]
 
-
-class Person:
-    """ A marker class """
-
-    pass
+class BaseHeading:
+    """ A marker class for an injectable to register against """
 
 
 @pytest.fixture
-def injector(container) -> Injector:
-    injector = Injector(container)
-    return injector
+def registry() -> InjectorRegistry:
+    r = InjectorRegistry()
+    return r
 
 
-def test_str_default_value(registry, injector):
+def test_str_default_value(registry):
     """ Simple type (str) and has a default """
 
     @dataclass
-    class TestPerson:
-        name: str = 'default'
+    class Heading:
+        title: str = 'Heading'
 
-        def __call__(self) -> VDOM:
-            return html('<div>{self.name}</div>')
+    registry.register_injectable(
+        for_=BaseHeading, target=Heading, use_props=True,
+    )
+    container = registry.create_injectable_container()
+    heading: Heading = container.get(BaseHeading)
+    assert 'Heading' == heading.title
 
-    register_injectable(registry, for_=Person, target=TestPerson)
-    person: TestPerson = injector(TestPerson)
-    assert 'default' == person.name
 
-
-def test_str_prop(registry, injector):
-    """ Simple type (str) with passed-in value """
+def test_str_props(registry):
+    """ Simple type (str) with passed-in value as props """
 
     @dataclass
-    class TestPerson:
-        name: str = 'default'
+    class Heading:
+        title: str = 'Heading'
 
-        def __call__(self) -> VDOM:
-            return html('<div>{self.name}</div>')
+    registry.register_injectable(
+        for_=BaseHeading, target=Heading, use_props=True,
+    )
+    container = registry.create_injectable_container()
+    heading: Heading = container.inject(BaseHeading, title='passed in')
+    assert 'passed in' == heading.title
 
-    register_injectable(registry, for_=Person, target=TestPerson)
-    person: TestPerson = injector(TestPerson, name='passed in')
-    assert 'passed in' == person.name
 
-
-def test_context(registry, injector):
+def test_context(registry):
     """ Use the type-hint to inject the context """
 
     @dataclass
-    class TestPerson:
+    class Heading:
         customer: Annotated[
             Customer,
             Context(),
         ]
 
-        def __call__(self) -> VDOM:
-            return html('<div>{self.customer.name}</div>')
-
-    register_injectable(
-        registry, for_=Person, target=TestPerson, context=Customer
+    registry.register_injectable(
+        for_=BaseHeading, target=Heading, context=Customer, use_props=True,
     )
-    person = injector(TestPerson)
-    assert 'Some Customer' == person.customer.name
+    context = Customer()
+    container = registry.create_injectable_container(context=context)
+    heading: Heading = container.inject(BaseHeading, context=context)
+    assert 'Some Customer' == heading.customer.name
 
 
-def test_injected_attr(registry, injector):
+def test_injected_attr(registry):
     """ Used ``injected`` to get the context and grab an attr """
 
     @dataclass
-    class TestPerson:
-        name: Annotated[
+    class Heading:
+        title: Annotated[
             str,
             Context(),
             Attr('name'),
         ]
 
-        def __call__(self) -> VDOM:
-            return html('<div>{self.name}</div>')
-
-    register_injectable(registry, for_=Person, target=TestPerson)
-    person = injector(TestPerson)
-    assert 'Some Customer' == person.name
+    registry.register_injectable(
+        for_=BaseHeading, target=Heading, use_props=True,
+    )
+    context = Customer()
+    container = registry.create_injectable_container(
+        context=context,
+    )
+    heading: Heading = container.inject(BaseHeading)
+    assert 'Some Customer' == heading.title

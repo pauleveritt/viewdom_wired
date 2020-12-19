@@ -11,12 +11,11 @@ from dataclasses import dataclass
 
 import pytest
 from viewdom.h import html
-from wired import ServiceRegistry
-from wired.dataclasses import factory, register_dataclass
-from wired_injector import injectable
+from wired.dataclasses import factory
+from wired_injector import InjectorRegistry
 from wired_injector.operators import Attr, Context, Get
 
-from viewdom_wired import render
+from viewdom_wired import render, component
 
 try:
     from typing import Annotated
@@ -40,7 +39,7 @@ class Settings:
     greeting: str = 'Hello'
 
 
-@injectable()
+@component()
 @dataclass
 class Heading:
     person: str
@@ -52,19 +51,13 @@ class Heading:
 
 
 @pytest.fixture
-def registry() -> ServiceRegistry:
-    import sys
-    from venusian import Scanner
-
-    registry = ServiceRegistry()
-    scanner = Scanner(registry=registry)
-    current_module = sys.modules[__name__]
-    scanner.scan(current_module)
-    register_dataclass(registry, Settings)
+def registry() -> InjectorRegistry:
+    registry = InjectorRegistry()
+    registry.scan()
     return registry
 
 
-@injectable(for_=Heading, context=SecondContext)
+@component(for_=Heading, context=SecondContext)
 @dataclass
 class SecondHeading:
     person: str
@@ -79,15 +72,15 @@ class SecondHeading:
         )
 
 
-def test_wired_renderer_first(registry: ServiceRegistry):
-    container = registry.create_container(context=FirstContext())
+def test_wired_renderer_first(registry: InjectorRegistry):
+    container = registry.create_injectable_container(context=FirstContext())
     expected = '<h1>Hello World, First Context</h1>'
     actual = render(html('''<{Heading} person="World"/>'''), container)
     assert expected == actual
 
 
-def test_wired_renderer_second(registry: ServiceRegistry):
-    container = registry.create_container(context=SecondContext())
+def test_wired_renderer_second(registry: InjectorRegistry):
+    container = registry.create_injectable_container(context=SecondContext())
     expected = '<h1>Hello World... Second Context</h1>'
     actual = render(html('''<{Heading} person="World"/>'''), container)
     assert expected == actual

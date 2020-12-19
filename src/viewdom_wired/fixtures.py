@@ -3,8 +3,8 @@ from typing import Protocol
 
 import pytest
 from viewdom import VDOM
-from wired import ServiceRegistry, ServiceContainer
-from wired.dataclasses import factory, register_dataclass
+from wired import ServiceContainer
+from wired.dataclasses import factory
 
 
 class Logo(Protocol):
@@ -24,20 +24,6 @@ class Customer:
 @dataclass
 class Settings:
     greeting: str = 'Hello'
-
-
-@pytest.fixture
-def registry() -> ServiceRegistry:
-    raise NotImplementedError('Stop using this fixture')
-    import sys
-    from venusian import Scanner
-
-    registry = ServiceRegistry()
-    scanner = Scanner(registry=registry)
-    current_module = sys.modules[__name__]
-    scanner.scan(current_module)
-    register_dataclass(registry, Settings)
-    return registry
 
 
 @pytest.fixture
