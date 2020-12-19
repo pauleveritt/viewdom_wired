@@ -9,8 +9,6 @@ import pytest
 from wired_injector import InjectorRegistry
 from wired_injector.operators import Context, Attr
 
-from viewdom_wired.fixtures import Customer
-
 try:
     from typing import Annotated
 except ImportError:
@@ -19,6 +17,11 @@ except ImportError:
 
 class BaseHeading:
     """ A marker class for an injectable to register against """
+
+
+@dataclass
+class Customer:
+    name: str = 'Some Customer'
 
 
 @pytest.fixture
