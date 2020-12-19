@@ -4,8 +4,11 @@ copyright = '2020, Paul Everitt <pauleveritt@me.com>'
 author = 'Paul Everitt <pauleveritt@me.com>'
 release = '0.0.1'
 extensions = [
+    'sphinx.ext.intersphinx',
     'sphinx.ext.autodoc',
     'myst_parser',
+    'sphinx.ext.napoleon',
+    'sphinx_autodoc_typehints',
 ]
 templates_path = ['_templates']
 html_theme = 'sphinx_book_theme'
@@ -28,3 +31,9 @@ html_sidebars = {
     ]
 }
 myst_admonition_enable = True
+myst_url_schemes=['http', 'https', 'mailto']
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3.7', None),
+    'wired': ('https://wired.readthedocs.io/en/stable', None),
+    'viewdom': ('https://viewdom.readthedocs.io/en/latest', None),
+}

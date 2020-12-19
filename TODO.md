@@ -2,10 +2,23 @@
 
 ## Now
 
+- Migrate examples
+
 ## Next
+
+- Cleanup fixtures.py to use InjectorRegistry
 
 ## Soon
 
+- Document
+  * Usage
+    - Container
+    - Context
+    - Components and use_props
+    - system_props
+    - Functions and namedtuples
+    - Protocols
+    
 - Put API into Sphinx docs
   * Improve docstrings and use Napoleon
 

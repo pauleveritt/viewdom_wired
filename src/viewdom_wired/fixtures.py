@@ -28,6 +28,7 @@ class Settings:
 
 @pytest.fixture
 def registry() -> ServiceRegistry:
+    raise NotImplementedError('Stop using this fixture')
     import sys
     from venusian import Scanner
 

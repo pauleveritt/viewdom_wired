@@ -72,10 +72,8 @@ class SecondHeading:
         Get(Settings),
         Attr('greeting'),
     ]
-    flag: int = 99
 
     def __call__(self):
-        x = 1
         return html(
             '''
         <h1>{self.greeting} {self.person}... {self.name}</h1>

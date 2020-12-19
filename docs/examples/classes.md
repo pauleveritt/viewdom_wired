@@ -127,6 +127,8 @@ start-after: from viewdom
 
 ## override
 
+TODO Explain that order of scanning matters, point to the change in `__init__.py`
+
 Now we get into the strength of `viewdom_wired`: a registration which *replaces* component from another package.
 
 Nothing changes in the pluggable app nor in the plugins.

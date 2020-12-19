@@ -1,18 +1,14 @@
 import pytest
 
-from examples import (
+from examples.pluggable import (
     hello_world,
     hello_children,
     hello_app,
-    app_plugin_site,
-    app_decorators_render,
-    subcomponents,
-    override,
     context,
     custom_context,
-    protocols_hello_logo,
-    logo_protocol,
-    adherent,
+    # protocols_hello_logo,
+    # logo_protocol,
+    # adherent,
 )
 
 
@@ -22,15 +18,11 @@ from examples import (
         hello_world,
         hello_children,
         hello_app,
-        app_plugin_site,
-        app_decorators_render,
-        subcomponents,
-        override,
         context,
         custom_context,
-        protocols_hello_logo,
-        logo_protocol,
-        adherent,
+        # protocols_hello_logo,
+        # logo_protocol,
+        # adherent,
     ],
 )
 def test_examples(target):
