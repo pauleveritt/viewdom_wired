@@ -1,5 +1,10 @@
 import pytest
 
+from examples.index import (
+    hello_component,
+    hello_settings,
+    prop_override,
+)
 from examples.pluggable import (
     hello_world,
     hello_children,
@@ -19,6 +24,9 @@ from examples.protocols import (
 @pytest.mark.parametrize(
     'target',
     [
+        hello_component,
+        hello_settings,
+        prop_override,
         hello_world,
         hello_children,
         hello_app,
