@@ -8,4 +8,4 @@ from .decorators import component
 from .protocols import Component
 from .render import render
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'

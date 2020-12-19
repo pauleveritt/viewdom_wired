@@ -1,14 +1,15 @@
 Changelog
 =========
 
-Unreleased
-==========
+0.2.0
+=====
+
+- Switch to ``wired_injector``
 
 - The ``Component`` protocol now indicates it returns a ``VDOM``
 
 - Tolerate usage of generics such as `Optional[str]`
 
-- Switch to ``wired_injector``
 
 0.1.0
 =====

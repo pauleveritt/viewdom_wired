@@ -2,7 +2,7 @@ project = 'viewdom_wired'
 html_title = 'viewdom_wired'
 copyright = '2020, Paul Everitt <pauleveritt@me.com>'
 author = 'Paul Everitt <pauleveritt@me.com>'
-release = '0.0.1'
+release = '0.1.0'
 extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.autodoc',

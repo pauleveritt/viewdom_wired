@@ -49,7 +49,7 @@ setup(
     description=(
         'Injectable and plugabble components and services for viewdom'
     ),
-    version='0.1.0',
+    version='0.2.0',
     long_description=readme + '\n\n' + changes,
     long_description_content_type='text/x-rst',
     author='Paul Everitt',
