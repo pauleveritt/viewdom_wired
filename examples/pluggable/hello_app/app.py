@@ -9,7 +9,7 @@ from .site import plugins
 def main():
     # The app
     registry = InjectorRegistry()
-    [registry.scan(plugin) for plugin in plugins ]
+    [registry.scan(plugin) for plugin in plugins]
     registry.scan()
 
     # Per "request"

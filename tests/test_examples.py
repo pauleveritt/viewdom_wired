@@ -6,9 +6,13 @@ from examples.pluggable import (
     hello_app,
     context,
     custom_context,
-    # protocols_hello_logo,
-    # logo_protocol,
-    # adherent,
+    subcomponents,
+)
+
+from examples.protocols import (
+    protocols_hello_logo,
+    logo_protocol,
+    adherent,
 )
 
 
@@ -20,9 +24,10 @@ from examples.pluggable import (
         hello_app,
         context,
         custom_context,
-        # protocols_hello_logo,
-        # logo_protocol,
-        # adherent,
+        subcomponents,
+        protocols_hello_logo,
+        logo_protocol,
+        adherent,
     ],
 )
 def test_examples(target):

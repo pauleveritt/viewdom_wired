@@ -5,10 +5,10 @@ A plugin that can be installed with pip and then register its components.
 from dataclasses import dataclass
 
 from viewdom import html, VDOM
-from wired_injector import injectable
+from viewdom_wired import component
 
 
-@injectable()
+@component()
 @dataclass
 class Greeting:
     name: str = 'viewdom_wired'

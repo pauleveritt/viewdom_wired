@@ -4,11 +4,11 @@ from wired_injector.registry import InjectorContainer
 
 
 def relaxed_call(
-        container: InjectorContainer,
-        callable_,
-        children=None,
-        parent_component=None,
-        **kwargs,
+    container: InjectorContainer,
+    callable_,
+    children=None,
+    parent_component=None,
+    **kwargs,
 ):
     """ Make a component instance then call its __call__, returning a VDOM """
 
@@ -17,10 +17,7 @@ def relaxed_call(
     context = container.context
     system_props = dict(children=children, parent_component=parent_component)
     component = container.inject(
-        callable_,
-        context=context,
-        system_props=system_props,
-        **kwargs
+        callable_, context=context, system_props=system_props, **kwargs
     )
     return component
 
@@ -37,10 +34,7 @@ def render(value, container: InjectorContainer, **kwargs):
 
 
 def render_gen(
-        value,
-        container: InjectorContainer,
-        children=None,
-        parent_component=None
+    value, container: InjectorContainer, children=None, parent_component=None
 ):
     for item in flatten(value):
         if isinstance(item, VDOMNode):

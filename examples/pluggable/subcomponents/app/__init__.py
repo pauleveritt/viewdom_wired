@@ -1,27 +1,20 @@
-"""
-A pluggable app that can be installed and can register plugins.
-"""
+from viewdom import html
+from wired_injector import InjectorRegistry
 
-from dataclasses import dataclass
-
-from venusian import Scanner
-
-from ...app_decorators_render.app import App as BaseApp
+from viewdom_wired import render
+from ..plugins.greeting import Greeting
+from ..site import plugins
 
 
-@dataclass
-class PunctuationCharacter:
-    """ A configurable symbol to use in punctuation """
+def main():
+    # The app
+    registry = InjectorRegistry()
+    [registry.scan(plugin) for plugin in plugins]
+    registry.scan()
 
-    symbol: str = '!'
+    # Per "request"
+    container = registry.create_injectable_container()
+    result = render(html('<{Greeting}/>'), container)
 
-
-@dataclass
-class App(BaseApp):
-    def __post_init__(self):
-        self.scanner = Scanner(registry=self.registry)
-
-        # Register a singleton for the punctuation character
-        self.registry.register_singleton(
-            PunctuationCharacter(), PunctuationCharacter
-        )
+    expected = '<h1>Hello viewdom_wired<span>!</span></h1>'
+    return expected, result

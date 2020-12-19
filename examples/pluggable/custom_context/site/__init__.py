@@ -1,5 +1,3 @@
 from ..plugins import greeting
 
-plugins = (
-    greeting,
-)
+plugins = (greeting,)

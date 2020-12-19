@@ -10,7 +10,7 @@ from .site.contexts import Customer
 def main():
     # The app
     registry = InjectorRegistry()
-    [registry.scan(plugin) for plugin in plugins ]
+    [registry.scan(plugin) for plugin in plugins]
     registry.scan()
 
     # Per "request"

@@ -38,7 +38,9 @@ def test_str_default_value(registry):
         title: str = 'Heading'
 
     registry.register_injectable(
-        for_=BaseHeading, target=Heading, use_props=True,
+        for_=BaseHeading,
+        target=Heading,
+        use_props=True,
     )
     container = registry.create_injectable_container()
     heading: Heading = container.get(BaseHeading)
@@ -53,7 +55,9 @@ def test_str_props(registry):
         title: str = 'Heading'
 
     registry.register_injectable(
-        for_=BaseHeading, target=Heading, use_props=True,
+        for_=BaseHeading,
+        target=Heading,
+        use_props=True,
     )
     container = registry.create_injectable_container()
     heading: Heading = container.inject(BaseHeading, title='passed in')
@@ -71,7 +75,10 @@ def test_context(registry):
         ]
 
     registry.register_injectable(
-        for_=BaseHeading, target=Heading, context=Customer, use_props=True,
+        for_=BaseHeading,
+        target=Heading,
+        context=Customer,
+        use_props=True,
     )
     context = Customer()
     container = registry.create_injectable_container(context=context)
@@ -91,7 +98,9 @@ def test_injected_attr(registry):
         ]
 
     registry.register_injectable(
-        for_=BaseHeading, target=Heading, use_props=True,
+        for_=BaseHeading,
+        target=Heading,
+        use_props=True,
     )
     context = Customer()
     container = registry.create_injectable_container(

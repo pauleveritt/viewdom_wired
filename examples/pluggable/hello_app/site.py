@@ -6,9 +6,7 @@ from viewdom_wired import component
 from .plugins import greeting
 from .plugins.greeting import Greeting
 
-plugins = (
-    greeting,
-)
+plugins = (greeting,)
 
 
 @component(for_=Greeting)
