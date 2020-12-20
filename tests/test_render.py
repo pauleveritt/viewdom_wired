@@ -81,6 +81,14 @@ class SecondHeading:
         )
 
 
+@component()
+@dataclass
+class NoFields:
+
+    def __call__(self):
+        return html('hello')
+
+
 def test_wired_renderer_first(registry: InjectorRegistry):
     container = registry.create_injectable_container(context=FirstContext())
     expected = '<h1>Hello World, First Context</h1>'
@@ -127,4 +135,11 @@ def test_wired_renderer_generics(registry: InjectorRegistry):
     registry.register_injectable(LocalHeading, LocalHeading, use_props=True)
     expected = '<h1>Name 1</h1>'
     actual = render(html('<{LocalHeading}/>'), container)
+    assert expected == actual
+
+
+def test_component_no_fields(registry: InjectorRegistry):
+    container = registry.create_injectable_container()
+    expected = 'hello'
+    actual = render(html('<{NoFields}/>'), container)
     assert expected == actual
