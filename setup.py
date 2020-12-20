@@ -7,7 +7,7 @@ def readfile(name):
 
 
 readme = readfile('README.rst')
-changes = readfile('CHANGES.rst')
+changes = readfile('CHANGES.md')
 
 requires = [
     'tagged',

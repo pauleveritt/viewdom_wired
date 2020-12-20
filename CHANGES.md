@@ -1,8 +1,10 @@
-Changelog
-=========
+# Changelog
 
-0.2.0
-=====
+## Unreleased
+
+- Change to use the wired_injector `cget_props` way of avoiding clashes between props and underlying `.get()` args
+
+## 0.2.0
 
 - Switch to ``wired_injector``
 
@@ -10,8 +12,6 @@ Changelog
 
 - Tolerate usage of generics such as `Optional[str]`
 
-
-0.1.0
-=====
+## 0.1.0
 
 First release.

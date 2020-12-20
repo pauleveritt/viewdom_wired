@@ -82,7 +82,8 @@ def test_context(registry):
     )
     context = Customer()
     container = registry.create_injectable_container(context=context)
-    heading: Heading = container.inject(BaseHeading, context=context)
+    cget_props = dict(context=context)
+    heading: Heading = container.inject(BaseHeading, cget_props=cget_props)
     assert 'Some Customer' == heading.customer.name
 
 
