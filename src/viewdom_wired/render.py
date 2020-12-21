@@ -1,6 +1,6 @@
 from viewdom import Context
 from viewdom.h import flatten, escape, encode_prop, VDOMNode, VOIDS
-from wired_injector.registry import InjectorContainer
+from wired_injector import InjectorContainer
 
 
 def relaxed_call(
