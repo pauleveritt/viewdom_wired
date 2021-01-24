@@ -2,14 +2,14 @@ from dataclasses import dataclass
 
 from viewdom import html, VDOM
 from wired_injector import injectable
-from wired_injector.operators import Get
+from wired_injector.pipeline.operators import Get
 
 from viewdom_wired import component
 
 try:
     from typing import Annotated
 except ImportError:
-    from typing_extensions import Annotated  # type: ignore
+    from typing_extensions import Annotated  # type: ignore # noqa: F401
 
 
 @injectable()

@@ -7,12 +7,12 @@ from dataclasses import dataclass
 
 import pytest
 from wired_injector import InjectorRegistry
-from wired_injector.operators import Context, Attr
+from wired_injector.pipeline.operators import Context, Attr
 
 try:
     from typing import Annotated
 except ImportError:
-    from typing_extensions import Annotated  # type: ignore
+    from typing_extensions import Annotated  # type: ignore # noqa: F401
 
 
 class BaseHeading:

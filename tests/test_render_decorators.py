@@ -13,14 +13,14 @@ import pytest
 from viewdom.h import html
 from wired.dataclasses import factory
 from wired_injector import InjectorRegistry
-from wired_injector.operators import Attr, Context, Get
+from wired_injector.pipeline.operators import Attr, Context, Get
 
 from viewdom_wired import render, component
 
 try:
     from typing import Annotated
 except ImportError:
-    from typing_extensions import Annotated  # type: ignore
+    from typing_extensions import Annotated  # type: ignore # noqa: F401
 
 
 class FirstContext:

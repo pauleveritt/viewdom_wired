@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 
 from viewdom import html
-from wired_injector.operators import Attr, Context
+from wired_injector.pipeline.operators import Attr, Context
 
 from viewdom_wired import component
 
 try:
     from typing import Annotated
 except ImportError:
-    from typing_extensions import Annotated  # type: ignore
+    from typing_extensions import Annotated  # type: ignore # noqa: F401
 
 
 @component()
