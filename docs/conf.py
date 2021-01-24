@@ -33,7 +33,7 @@ html_sidebars = {
 myst_enable_extensions = [
     'colon_fence',
 ]
-myst_url_schemes=['http', 'https', 'mailto']
+myst_url_schemes = ['http', 'https', 'mailto']
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3.7', None),
     'wired': ('https://wired.readthedocs.io/en/stable', None),

@@ -18,7 +18,7 @@
     - system_props
     - Functions and namedtuples
     - Protocols
-    
+
 - Put API into Sphinx docs
   * Improve docstrings and use Napoleon
 

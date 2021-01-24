@@ -84,7 +84,6 @@ class SecondHeading:
 @component()
 @dataclass
 class NoFields:
-
     def __call__(self):
         return html('hello')
 
