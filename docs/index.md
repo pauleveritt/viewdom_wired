@@ -7,7 +7,8 @@ You want them to work in different systems: Sphinx, Pelican, Flask, etc.
 You also want to make it easy to extend or customize without having to fork.
 
 `viewdom_wired` brings pluggability and flexibility to [viewdom](https://viewdom.readthedocs.io/en/latest/) templates and components.
-With dependency injection and containers from [wired](https://wired.readthedocs.io/en/latest/>), the components in your {doc}`pluggable apps <./pluggable>` are now swappable, easier to write and test, and less brittle.
+With dependency injection and containers from [wired](https://wired.readthedocs.io/en/latest/), the components in your {doc}`pluggable apps <./pluggable>` are now swappable, easier to write and test, and less brittle.
+
 
 :::{note}
 
